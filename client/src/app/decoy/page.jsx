@@ -8,10 +8,24 @@ const Home = () => {
     socket.on("connect", () => {
       console.log("Connected to relay server!!!");
     });
+    
 
-    socket.on("alert", (message) => {
+    socket.on('alert', (message) => {
+      console.log(`Alerting user with message: ${message}`);
       alert(message);
+      // Handle sending the message to the user or do any other necessary logic here
     });
+
+    // Log any errors
+    socket.on("error", (error) => {
+      console.error("Socket error:", error);
+    });
+
+    // // Cleanup function
+    // return () => {
+    //   // Disconnect socket when component unmounts
+    //   socket.disconnect();
+    // };
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
 
@@ -39,6 +53,7 @@ const Home = () => {
   console.log(ipv4);
 
   socket.emit("join", ipv4);
+  socket.userId = ipv4;
   return (
     <div>
       <h1>Home</h1>

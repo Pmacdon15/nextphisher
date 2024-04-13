@@ -21,18 +21,20 @@ let connectedUsers = {}; // Define connectedUsers globally
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+  
 
   // Listen for the 'join' event and store the userName with the socket
-  socket.on("join", (userName) => {
-    console.log(`${userName} joined`);
-    socket.userName = userName;
-    connectedUsers[socket.id] = userName;
+  socket.on("join", (userId) => {
+    console.log(`${userId} joined`);
+    socket.userId = userId
+    connectedUsers[socket.id] = userId;
     console.log("User List: " + JSON.stringify(connectedUsers)); // Modify this line
     io.emit("UserList", Object.values(connectedUsers));
-  });
+
+  });  
 
   socket.on("alert", (message) => {
-    console.log("Alerting", "with message", message);
+    console.log("Alerting with message", message);
     io.emit("alert", message);
   });
 
