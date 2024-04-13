@@ -32,7 +32,11 @@ io.on("connection", (socket) => {
     io.emit("UserList", Object.values(connectedUsers));
 
   });  
-
+  socket.on("requestUserList", () => {
+    // Send the list of connected users to the client
+    io.emit("UserList", Object.values(connectedUsers));
+  });
+  
   socket.on("alert", (message, userId) => {
     console.log("Alerting with message", message);
     console.log("User ID:", userId.userId);

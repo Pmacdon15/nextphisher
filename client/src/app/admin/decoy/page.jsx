@@ -12,6 +12,7 @@ const Home = () => {
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to relay server!!!");
+      socket.emit("requestUserList");      
     });
     socket.on("UserList", (userList) => {
       // Remove null values from the user list and duplicate values
@@ -21,12 +22,11 @@ const Home = () => {
       console.log("UserList", userList);
       setUserList(userList);
     });
+
+  
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-  // function sendMessageToUser(userId, message) {
-  //   // Emit a message to the room named after the userId
-  //   io.to(userId).emit('message', message);
-  // }
+  
   return (
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
@@ -35,7 +35,7 @@ const Home = () => {
           <>
             <div className={adminStyles.contentRow}>
               <div className={adminStyles.data}>
-                <h2>Connected Users</h2>
+                <h2>Connected User</h2>
                 {userList.map((user) => (
                   <div key={user} className={adminStyles.userData}>
                     <h3>{user}</h3>
