@@ -15,16 +15,16 @@ const Home = () => {
       socket.emit("requestUserList");      
     });
     socket.on("UserList", (userList) => {
-      // Remove null values from the user list and duplicate values
       userList = userList.filter(
         (user, index) => userList.indexOf(user) === index && user !== null
       );
       console.log("UserList", userList);
       setUserList(userList);
     });
+  });
 
   
-  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  
 
   
   return (

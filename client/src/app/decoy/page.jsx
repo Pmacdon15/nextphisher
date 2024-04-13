@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import decoyStyles from "./decoy.module.css";
 
 const Home = () => {
   const socket = io("ws://localhost:3069");
@@ -31,7 +32,7 @@ const Home = () => {
     //   // Disconnect socket when component unmounts
     //   socket.disconnect();
     // };
-  }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+  },); 
 
   const [ipv4, setIpv4] = useState(null);
 
@@ -59,10 +60,37 @@ const Home = () => {
   socket.emit("join", ipv4);
   socket.userId = ipv4;
   return (
-    <div>
-      <h1>Home</h1>
+    <div className={decoyStyles.container}>
+      <div className={decoyStyles.header}>
+        <h1>Welcome to Exotic Animals Emporium</h1>
+      </div>
+      <div className={decoyStyles.main}>
+        <div className={decoyStyles.animalList}>
+          <h2>Available Exotic Animals</h2>
+          <ul>
+            <li>Lion</li>
+            <li>Tiger</li>
+            <li>Elephant</li>
+            <li>Giraffe</li>
+            <li>Monkey</li>
+            {/* Add more exotic animals here */}
+          </ul>
+        </div>
+        <div className={decoyStyles.buyingGuide}>
+          <h2>How to Buy an Exotic Animal</h2>
+          <p>Follow these simple steps to purchase your dream exotic animal:</p>
+          <ol>
+            <li>Choose the animal you want to buy from our list.</li>
+            <li>Contact us via email or phone to inquire about the availability and price.</li>
+            <li>Arrange for the purchase and delivery of your exotic pet.</li>
+            <li>Enjoy your new exotic companion!</li>
+          </ol>
+        </div>
+      </div>
+      <div className={decoyStyles.footer}>
+        <p>&copy; 2024 Exotic Animals Emporium. All rights reserved.</p>
+      </div>
     </div>
   );
-};
-
+}
 export default Home;
