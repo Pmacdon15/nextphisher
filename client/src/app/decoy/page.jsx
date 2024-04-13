@@ -8,11 +8,16 @@ const Home = () => {
     socket.on("connect", () => {
       console.log("Connected to relay server!!!");
     });
-    
 
-    socket.on('alert', (message) => {
+    socket.on("alert", (message, { userId }) => {
+      if (socket.userId === userId.userId) {
+        console.log("Alerting user with message: ", message);
+        alert(message);
+      }
+      console.log("UserId:", userId);
       console.log(`Alerting user with message: ${message}`);
       alert(message);
+      //}
       // Handle sending the message to the user or do any other necessary logic here
     });
 
@@ -27,7 +32,6 @@ const Home = () => {
     //   socket.disconnect();
     // };
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
-
 
   const [ipv4, setIpv4] = useState(null);
 
@@ -59,6 +63,6 @@ const Home = () => {
       <h1>Home</h1>
     </div>
   );
-}
+};
 
 export default Home;

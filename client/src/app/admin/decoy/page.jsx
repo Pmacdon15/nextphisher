@@ -7,8 +7,7 @@ import adminStyles from "../adminStyles.module.css";
 const Home = () => {
   const backEndPort = process.env.BACK_END_PORT || 3069;
   const [userList, setUserList] = useState([]);
-
-  const message = "Alert!";
+  
   const socket = io(`ws://localhost:${backEndPort}`);
   useEffect(() => {
     socket.on("connect", () => {
@@ -44,7 +43,7 @@ const Home = () => {
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={() => socket.emit("alert", "Alerting from Decoy")} 
+                      onClick={() => socket.emit("alert", "Alerting from Decoy",{userId:`${user}`})} 
                     >
                       Alert
                     </Button>

@@ -33,10 +33,13 @@ io.on("connection", (socket) => {
 
   });  
 
-  socket.on("alert", (message) => {
+  socket.on("alert", (message, userId) => {
     console.log("Alerting with message", message);
-    io.emit("alert", message);
+    console.log("User ID:", userId.userId);
+    socket.userId = userId;
+    io.emit("alert", message, userId);
   });
+  
 
   socket.on("message", (message) => {
     console.log(socket.userName + " said " + message);
