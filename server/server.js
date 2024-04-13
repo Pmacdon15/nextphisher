@@ -1,10 +1,17 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-const path = require("path");
+//const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
+
+// const AuthManager = require("./auth.js");
+// const cookieParser = require("cookie-parser");
+// app.use(cookieParser());
+
+app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 
 const io = socketIo(server, {
   cors: { origin: "*" },
@@ -12,21 +19,22 @@ const io = socketIo(server, {
 
 let connectedUsers = {}; // Define connectedUsers globally
 
-
-
 io.on("connection", (socket) => {
   console.log("a user connected");
 
   // Listen for the 'join' event and store the userName with the socket
   socket.on("join", (userName) => {
-    console.log(`${userName} joined`);    
+    console.log(`${userName} joined`);
+    socket.userName = userName;
+    connectedUsers[socket.id] = userName;
+    console.log("User List: " + JSON.stringify(connectedUsers)); // Modify this line
+    io.emit("UserList", Object.values(connectedUsers));
   });
 
   socket.on("alert", (message) => {
-    console.log("Alerting","with message", message);
+    console.log("Alerting", "with message", message);
     io.emit("alert", message);
   });
-
 
   socket.on("message", (message) => {
     console.log(socket.userName + " said " + message);
@@ -40,18 +48,18 @@ io.on("connection", (socket) => {
   });
 
   // Handle user disconnecting
-  socket.on("disconnect", () => {
-    const userName = socket.userName || socket.id;
-    // Remove the user from the connectedUsers object
-    delete connectedUsers[socket.id];
+  // socket.on("disconnect", () => {
+  //   const userName = socket.userName || socket.id;
+  //   // Remove the user from the connectedUsers object
+  //   delete connectedUsers[socket.id];
 
-    // // Emit the 'userList' event with the updated user list
-    // io.emit("userList", Object.values(connectedUsers));
+  // // Emit the 'userList' event with the updated user list
+  // io.emit("userList", Object.values(connectedUsers));
 
-    // io.emit("message", `${userName} left the chat`);
+  // io.emit("message", `${userName} left the chat`);
 
-    // console.log(`${userName} left the chat`);
-  });
+  // console.log(`${userName} left the chat`);
+  // });
 });
 
 const PORT = process.env.PORT || 3069;

@@ -2,31 +2,57 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Button from "@mui/material/Button";
+import adminStyles from "../adminStyles.module.css";
 
 const Home = () => {
-  const socket = io("ws://localhost:3069");
+  const backEndPort = process.env.BACK_END_PORT || 3069;
+  const [userList, setUserList] = useState([]);
+
+  const socket = io(`ws://localhost:${backEndPort}`);
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Connected to relay server!!!");
+      console.log("Connected to relay server!!!");    
+    });
+    socket.on("UserList", (userList) => {
+      console.log("UserList", userList);
+      setUserList(userList);
     });
 
-    // socket.on("alert", (message) => {
-    //   alert(message);
-    // });
   }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
 
-
- 
-
-  
-
-  ;
   return (
-    <div>
-      <h1>Home</h1>
-      <Button variant="contained" color="primary" onClick={() => socket.emit("alert", "Hello from the Server!")}>Alert</Button>
+    <div className={adminStyles.container}>
+      <h2 className={adminStyles.title}>Decoy Dashboard</h2>
+      <div className={adminStyles.dataContainer}>
+        {userList ? (
+          <>
+            <div className={adminStyles.contentRow}>
+              <div className={adminStyles.data}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => socket.emit("alert", "Alerting from Decoy")}
+                >
+                  Alert
+                </Button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <h3 className={adminStyles.title}>Loading or Not Signed In</h3>
+        )}
+      </div>
+      <div className={adminStyles.contentRow}>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => router.push("/admin")}
+        >
+          Back
+        </Button>
+      </div>
     </div>
   );
-}
+};
 
 export default Home;

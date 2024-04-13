@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import adminStyles from "../adminStyles.module.css";
 import Button from "@mui/material/Button";
-import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 const AdminDashboard = () => {
