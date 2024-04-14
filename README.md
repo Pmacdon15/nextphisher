@@ -90,7 +90,7 @@ The commands are:
 npm run build-client
 ```
 
-4. Setup port forwarding on your router.
+4. Setup port forwarding on your router for both port 3000 and the answer you gave during setup.
 
 # Start up
 
