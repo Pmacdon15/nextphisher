@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import adminImage from "../../../public/admin.png";
@@ -43,7 +43,7 @@ export default function AdminDashboard() { // Change component name
   }
   let firstHalf = [];
   let secondHalf = [];
-  if (webSitesInProject !== undefined&& webSitesInProject.length > 0) {
+  if (webSitesInProject !== undefined && webSitesInProject.length > 0) {
     const halfIndex = Math.ceil(webSitesInProject.length / 2);
     firstHalf = webSitesInProject.slice(0, halfIndex);
     secondHalf = webSitesInProject.slice(halfIndex);
@@ -68,12 +68,12 @@ export default function AdminDashboard() { // Change component name
                   </Link>
                 ))}
               </div>
-  
+
               <div className={adminStyles.contentRow}>
-              <Button variant="contained" color="success">
-                  <Link href="/admin/Decoy">Decoy Controller</Link>
+                <Button variant="contained" color="success" style={{ margin: "1%" }}>
+                  <Link href="/admin/decoy">Decoy Controller</Link>
                 </Button>
-                <Button variant="contained" color="success">
+                <Button variant="contained" color="success" style={{ margin: "1%" }}>
                   <Link href="/admin/userData">User Data</Link>
                 </Button>
                 <Button
@@ -100,7 +100,7 @@ export default function AdminDashboard() { // Change component name
       </div>
     </div>
   );
-  
+
 };
 
 

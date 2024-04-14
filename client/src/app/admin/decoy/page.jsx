@@ -48,6 +48,11 @@ const Home = () => {
     setMessage(event.target.value);
   };
 
+  const handleTextFieldKeyPress = (event, userId) => {
+    if (event.key === 'Enter') {
+      handleAlertClick(userId);
+    }
+  };
   return (
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
@@ -61,7 +66,7 @@ const Home = () => {
                     <h2>Connected User</h2>
                     <h3>{user}</h3>
                     <div className={adminStyles.alertOptions}>
-                    <TextField
+                      <TextField
                         id="message"
                         label="Message"
                         variant="standard"
@@ -69,14 +74,15 @@ const Home = () => {
                         value={message}
                         onChange={handleMessageChange}
                         style={{ marginBottom: "1%" }}
+                        onKeyDown={(event) => handleTextFieldKeyPress(event, user)}
                       />
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={() => handleAlertClick(user)}
-                    >
-                      Alert
-                    </Button>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() => handleAlertClick(user)}
+                      >
+                        Alert
+                      </Button>
                     </div>
                   </div>
                 </div>
