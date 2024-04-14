@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import io from "socket.io-client";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
@@ -9,6 +10,7 @@ const Home = () => {
   const [socket, setSocket] = useState(null);
   const [userList, setUserList] = useState([]);
   const [message, setMessage] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
