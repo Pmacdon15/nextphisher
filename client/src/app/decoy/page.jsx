@@ -4,8 +4,8 @@ import io from "socket.io-client";
 import decoyStyles from "./decoy.module.css";
 
 const Home = () => {
-  const backEndIp = process.env.BACKEND_IP;
-  const backEndPort = process.env.BACKEND_PORT;
+  const backEndIp = process.env.BACK_END_IP;
+  const backEndPort = process.env.BACK_END_PORT;
   const socket = io(`ws://${backEndIp}:${backEndPort}`);
 
   useEffect(() => {
