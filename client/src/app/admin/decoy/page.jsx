@@ -53,15 +53,16 @@ const Home = () => {
       handleAlertClick(userId);
     }
   };
+  
   return (
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
       <div className={adminStyles.dataContainer}>
         {userList ? (
           <>
-            <div className={adminStyles.contentRow}>
-              {userList.map((user) => (
-                <div key={user} className={adminStyles.userData}>
+            <div className={adminStyles.dataColumn}>
+              {userList.map((user, index) => (
+                <div key={index} className={adminStyles.userData}>
                   <div className={adminStyles.data}>
                     <h2>Connected User</h2>
                     <h3>{user}</h3>
@@ -93,8 +94,14 @@ const Home = () => {
           <h3 className={adminStyles.title}>Loading or Not Signed In</h3>
         )}
       </div>
+      <div className={adminStyles.contentRow}>
+        <Button variant="contained" color="success" onClick={() => router.push("/admin")}>
+          Back
+        </Button>
+      </div>
     </div>
   );
 };
+
 
 export default Home;
