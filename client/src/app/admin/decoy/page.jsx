@@ -5,10 +5,11 @@ import Button from "@mui/material/Button";
 import adminStyles from "../adminStyles.module.css";
 
 const Home = () => {
-  const backEndPort = process.env.BACK_END_PORT || 3069;
+  // const backEndPort = process.env.BACK_END_PORT || 3069;
   const [userList, setUserList] = useState([]);
-  
-  const socket = io(`ws://localhost:${backEndPort}`);
+  const backEndIp = process.env.BACKEND_IP;
+  const backEndPort = process.env.BACKEND_PORT;
+  const socket = io(`ws://${backEndIp}:${backEndPort}`);
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to relay server!!!");
