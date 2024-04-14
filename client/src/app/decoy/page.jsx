@@ -4,7 +4,10 @@ import io from "socket.io-client";
 import decoyStyles from "./decoy.module.css";
 
 const Home = () => {
-  const socket = io("ws://localhost:3069");
+  const backEndIp = process.env.BACKEND_IP;
+  const backEndPort = process.env.BACKEND_PORT;
+  const socket = io(`ws://${backEndIp}:${backEndPort}`);
+
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to relay server!!!");
