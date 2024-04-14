@@ -70,6 +70,9 @@ export default function AdminDashboard() { // Change component name
               </div>
   
               <div className={adminStyles.contentRow}>
+              <Button variant="contained" color="success">
+                  <Link href="/admin/Decoy">Decoy Controller</Link>
+                </Button>
                 <Button variant="contained" color="success">
                   <Link href="/admin/userData">User Data</Link>
                 </Button>

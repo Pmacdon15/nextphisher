@@ -8,6 +8,7 @@ import adminStyles from "../adminStyles.module.css";
 const Home = () => {
   const [socket, setSocket] = useState(null);
   const [userList, setUserList] = useState([]);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
@@ -38,10 +39,13 @@ const Home = () => {
 
   const handleAlertClick = (userId) => {
     if (socket) {
-      socket.emit("alert", "Alerting from Decoy", { userId: `${userId}` });
+      socket.emit("alert", message, { userId: `${userId}` });
     } else {
       console.error("Socket is not initialized.");
     }
+  };
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
   };
 
   return (
@@ -58,12 +62,14 @@ const Home = () => {
                     <h3>{user}</h3>
                     <div className={adminStyles.alertOptions}>
                     <TextField
-                      id="outlined-basic"
-                      label="Message"
-                      variant="standard"
-                      color="success"
-                      style={{marginBottom: "1%"}}
-                    />
+                        id="message"
+                        label="Message"
+                        variant="standard"
+                        color="success"
+                        value={message}
+                        onChange={handleMessageChange}
+                        style={{ marginBottom: "1%" }}
+                      />
                     <Button
                       variant="contained"
                       color="success"
