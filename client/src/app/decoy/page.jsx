@@ -20,9 +20,9 @@ const Home = () => {
     });
 
     newSocket.on("alert", (message, { userId }) => {
-      if(userId === ipv4) {
-      console.log("Alerting user with message: ", message);
-      alert(message);
+      if (userId === newSocket.userId) {
+        console.log("Alerting user with message: ", message);
+        alert(message);
       }
     });
 
