@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
 import adminStyles from "../adminStyles.module.css";
 
 const Home = () => {
@@ -50,11 +51,19 @@ const Home = () => {
         {userList ? (
           <>
             <div className={adminStyles.contentRow}>
-              <div className={adminStyles.data}>
-                <h2>Connected User</h2>
-                {userList.map((user) => (
-                  <div key={user} className={adminStyles.userData}>
+              {userList.map((user) => (
+                <div key={user} className={adminStyles.userData}>
+                  <div className={adminStyles.data}>
+                    <h2>Connected User</h2>
                     <h3>{user}</h3>
+                    <div className={adminStyles.alertOptions}>
+                    <TextField
+                      id="outlined-basic"
+                      label="Message"
+                      variant="standard"
+                      color="success"
+                      style={{marginBottom: "1%"}}
+                    />
                     <Button
                       variant="contained"
                       color="success"
@@ -62,9 +71,10 @@ const Home = () => {
                     >
                       Alert
                     </Button>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </>
         ) : (
