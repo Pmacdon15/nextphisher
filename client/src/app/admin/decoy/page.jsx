@@ -7,8 +7,8 @@ import adminStyles from "../adminStyles.module.css";
 const Home = () => {
   // const backEndPort = process.env.BACK_END_PORT || 3069;
   const [userList, setUserList] = useState([]);
-  const backEndIp = process.env.BACKEND_IP;
-  const backEndPort = process.env.BACKEND_PORT;
+  const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
+  const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
   const socket = io(`ws://${backEndIp}:${backEndPort}`);
   useEffect(() => {
     socket.on("connect", () => {
