@@ -1,33 +1,48 @@
-"use client";
+'use client'
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Button from "@mui/material/Button";
 import adminStyles from "../adminStyles.module.css";
 
 const Home = () => {
-  // const backEndPort = process.env.BACK_END_PORT || 3069;
+  const [socket, setSocket] = useState(null);
   const [userList, setUserList] = useState([]);
-  const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
-  const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
-  const socket = io(`ws://${backEndIp}:${backEndPort}`);
+
   useEffect(() => {
-    socket.on("connect", () => {
+    const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
+    const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
+    const newSocket = io(`ws://${backEndIp}:${backEndPort}`);
+
+    setSocket(newSocket);
+
+    newSocket.emit("join", "Decoy Controller");
+
+    newSocket.on("connect", () => {
       console.log("Connected to relay server!!!");
-      socket.emit("requestUserList");      
     });
-    socket.on("UserList", (userList) => {
+
+    newSocket.on("UserList", (userList) => {
       userList = userList.filter(
         (user, index) => userList.indexOf(user) === index && user !== null
       );
-      console.log("UserList", userList);
+      userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
     });
-  });
 
-  
-  
+    return () => {
+      console.log("Disconnecting from relay server!!!");
+      newSocket.disconnect();
+    };
+  }, []);
 
-  
+  const handleAlertClick = (userId) => {
+    if (socket) {
+      socket.emit("alert", "Alerting from Decoy", { userId: `${userId}` });
+    } else {
+      console.error("Socket is not initialized.");
+    }
+  };
+
   return (
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
@@ -40,11 +55,10 @@ const Home = () => {
                 {userList.map((user) => (
                   <div key={user} className={adminStyles.userData}>
                     <h3>{user}</h3>
-                    {/* Additional user data can be added here */}
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={() => socket.emit("alert", "Alerting from Decoy",{userId:`${user}`})} 
+                      onClick={() => handleAlertClick(user)}
                     >
                       Alert
                     </Button>
@@ -56,15 +70,6 @@ const Home = () => {
         ) : (
           <h3 className={adminStyles.title}>Loading or Not Signed In</h3>
         )}
-      </div>
-      <div className={adminStyles.contentRow}>
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => router.push("/admin")}
-        >
-          Back
-        </Button>
       </div>
     </div>
   );

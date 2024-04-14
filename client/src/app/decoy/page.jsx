@@ -1,43 +1,43 @@
-"use client";
+'use client';
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import decoyStyles from "./decoy.module.css";
 
 const Home = () => {
-  const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
-  const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
-  const socket = io(`ws://${backEndIp}:${backEndPort}`);
+  const [socket, setSocket] = useState(null);
+  const [ipv4, setIpv4] = useState(null);
 
   useEffect(() => {
-    socket.on("connect", () => {
+    const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
+    const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
+
+    // Create a new WebSocket connection
+    const newSocket = io(`ws://${backEndIp}:${backEndPort}`);
+
+    // Set up event listeners
+    newSocket.on("connect", () => {
       console.log("Connected to relay server!!!");
     });
 
-    socket.on("alert", (message, { userId }) => {
-      if (socket.userId === userId.userId) {
-        console.log("Alerting user with message: ", message);
-        alert(message);
-      }
-      console.log("UserId:", userId);
-      console.log(`Alerting user with message: ${message}`);
+    newSocket.on("alert", (message, { userId }) => {
+      console.log("Alerting user with message: ", message);
       alert(message);
-      //}
-      // Handle sending the message to the user or do any other necessary logic here
     });
 
-    // Log any errors
-    socket.on("error", (error) => {
+    newSocket.on("error", (error) => {
       console.error("Socket error:", error);
     });
 
-    // // Cleanup function
-    // return () => {
-    //   // Disconnect socket when component unmounts
-    //   socket.disconnect();
-    // };
-  },); 
+    // Store the socket instance in state
+    setSocket(newSocket);
 
-  const [ipv4, setIpv4] = useState(null);
+    // Cleanup function
+    return () => {
+      // Disconnect socket when component unmounts
+      console.log("Disconnecting from relay server!!!");
+      newSocket.disconnect();
+    };
+  }, []); // Only run this effect once on component mount
 
   useEffect(() => {
     const fetchIPv4 = async () => {
@@ -60,8 +60,14 @@ const Home = () => {
 
   console.log(ipv4);
 
-  socket.emit("join", ipv4);
-  socket.userId = ipv4;
+  // Ensure that socket is initialized before emitting events
+  useEffect(() => {
+    if (socket && ipv4) {
+      socket.emit("join", ipv4);
+      socket.userId = ipv4;
+    }
+  }, [socket, ipv4]);
+
   return (
     <div className={decoyStyles.container}>
       <div className={decoyStyles.header}>
@@ -95,5 +101,6 @@ const Home = () => {
       </div>
     </div>
   );
-}
+};
+
 export default Home;

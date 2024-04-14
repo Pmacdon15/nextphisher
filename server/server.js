@@ -28,14 +28,20 @@ io.on("connection", (socket) => {
     console.log(`${userId} joined`);
     socket.userId = userId
     connectedUsers[socket.id] = userId;
-    console.log("User List: " + JSON.stringify(connectedUsers)); // Modify this line
+    console.log("User List: " + JSON.stringify(connectedUsers)); 
     io.emit("UserList", Object.values(connectedUsers));
 
   });  
-  socket.on("requestUserList", () => {
-    // Send the list of connected users to the client
-    io.emit("UserList", Object.values(connectedUsers));
-  });
+  // socket.on("requestUserList", () => {
+  //   // Send the list of connected users to the client
+  //   io.emit("UserList", Object.values(connectedUsers));
+  // });
+  // socket.on("UserList", (userList) => {
+  //   userList = userList.filter(
+  //     (user, index) => userList.indexOf(user) === index && user !== null
+  //   );
+  //   console.log("UserList", userList);
+  // });
   
   socket.on("alert", (message, userId) => {
     console.log("Alerting with message", message);
