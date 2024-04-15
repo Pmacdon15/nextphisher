@@ -1,7 +1,7 @@
 .formContainer {
     margin-top: 10%;
     height: 450px;
-    width: 30%;
+    width: 50%;
     font-family: sans-serif;
     margin-left: auto;
     margin-right: auto;
@@ -17,7 +17,6 @@
     width: auto;
     height: 20%;
 }
-
 
 .title {
     text-align: center;
@@ -47,9 +46,12 @@
 }
 
 /* For cell phone screens */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .formContainer {
         width: 90%;
         margin-top: 10%;
+    }
+    .loginImage {
+        width: 90%;
     }
 }

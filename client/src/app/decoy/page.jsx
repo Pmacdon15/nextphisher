@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import decoyStyles from "./decoy.module.css";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [socket, setSocket] = useState(null);
   const [ipv4, setIpv4] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
@@ -23,6 +25,15 @@ const Home = () => {
       if (userId === newSocket.userId) {
         console.log("Alerting user with message: ", message);
         alert(message);
+      }
+    });
+
+    newSocket.on("pushToPage", (site, { userId }) => {
+      if (userId === newSocket.userId) {
+        console.log("Pushing user to page: ", site);
+        const url = (`/${site}`);
+        console.log("redirecting to: ", url);
+        router.push(url);
       }
     });
 
