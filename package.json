@@ -1,5 +1,5 @@
 {
-  "name": "nextpisher",
+  "name": "nextphisher",
   "version": "1.0.0",
   "description": "A simple project That started with storing and displaying users data that will hopfully evolved into much more taking inspiration from beEF.",
   "main": "npm start",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pmacdon15/nextpisher.git"
+    "url": "git+https://github.com/Pmacdon15/nextphisher.git"
   },
   "keywords": [
     "Pishing"
@@ -22,7 +22,7 @@
   "author": "Patrick MacDonald",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Pmacdon15/nextpisher/issues"
+    "url": "https://github.com/Pmacdon15/nextphisher/issues"
   },
-  "homepage": "https://github.com/Pmacdon15/nextpisher#readme"
+  "homepage": "https://github.com/Pmacdon15/nextphisher#readme"
 }

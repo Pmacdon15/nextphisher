@@ -44,10 +44,19 @@
 .button {
      margin: 5px;
 }
+
+/* For cell phone screens */
+@media only screen and (max-width: 950px) {
+    .formContainer {
+        width: 80%;
+        margin-top: 10%;
+    }
+
+}
 /* For cell phone screens */
 @media only screen and (max-width: 700px) {
     .formContainer {
-        width: 90%;
+        width: 80%;
         margin-top: 10%;
     }
     .loginImage {

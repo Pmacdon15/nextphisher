@@ -1,4 +1,4 @@
-# Next Pisher
+# Next Phisher
 
 # Table of Contents
 - [Description](#Description)
@@ -19,31 +19,31 @@ This project is intended solely for educational purposes and ethical research in
 # Features
 
 ## Current Features
-1 notGoogle Phishing Site:
+1. notGoogle Phishing Site:
 - A simulated phishing site named “notGoogle” serves as a decoy to prevent users from inadvertently inputting sensitive data.
 - Enhancement: Consider adding educational content to raise awareness about phishing risks and provide clear warnings.
 
-2 Decoy Site with Custom Alerts:
+2. Decoy Site with Custom Alerts:
 - The decoy site allows administrators to send custom alerts from the decoy controller screen in the admin dashboard.
 - Enhancement: Make the decoy site more convincing by adding interactive elements and ensuring it closely resembles a legitimate service.
 
-3 Local Storage for Collected User Data:
+3. Local Storage for Collected User Data:
 - User data collected during phishing input is stored locally.
 
-4 QR Codes for Service Links:
+4. QR Codes for Service Links:
 - QR codes are provided, linking to each service in the Admin Dashboard.
 
-5 User Redirection Abilities:
+5. User Redirection Abilities:
 - Allow users to be redirected to different sites while on the decoy site and subsequently on the phishing sites.
 
-6 Alerts for Phishing Websites:
+6. Alerts for Phishing Websites:
 - Enable sending alerts to the phishing websites themselves.
 - Enhancement: Ensure that the alerts align with the decoy site’s design.
 
 # Cloning
 1. Clone repository(git ssh method) run this command: 
 ```bash
-git clone git@github.com:Pmacdon15/nextpisher.git
+git clone git@github.com:Pmacdon15/nextphisher.git
 ```
 
 # Setup
