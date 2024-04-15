@@ -105,13 +105,13 @@ pm2 start npm --name nextPisherServer -- run start-server
 ### Client Side
 - notGoogle(pishing) User data will be stored when entered on this page.
 ```HTML
-http://"Your backend Ip here":"Your backend Ip here"/notGoogle
+http://"Your backend Ip here":3000/notGoogle
 ```
 (Remove "") 
 
 - decoy(User interaction) Admin can send custom alerts to clients on this site.
 ```HTML
-http://"Your backend Ip here":"Your backend Ip here"/decoy
+http://"Your backend Ip here":3000/decoy
 ```
 (Remove "")
 
