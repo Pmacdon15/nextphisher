@@ -55,7 +55,16 @@ const Home = () => {
       handleAlertClick(userId);
     }
   };
-  
+
+  const handlePushToPageClick = (site, userId) => {
+    console.log("Pushing to page", site);
+    if (socket) {
+      socket.emit("pushToPage", site, { userId: `${userId}` });
+    } else {
+      console.error("Socket is not initialized.");
+    }
+  };
+
   return (
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
@@ -83,8 +92,13 @@ const Home = () => {
                         variant="contained"
                         color="success"
                         onClick={() => handleAlertClick(user)}
+                        style={{ margin: "1%" }} 
                       >
                         Alert
+                      </Button>
+                      <Button variant="contained" color="success" onClick={() =>handlePushToPageClick("notGoogle", user)}
+                        style={{ margin: "1%" }} >
+                        Push notGoogle
                       </Button>
                     </div>
                   </div>
