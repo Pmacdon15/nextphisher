@@ -7,10 +7,26 @@ import { TextField } from "@mui/material";
 import adminStyles from "../adminStyles.module.css";
 
 const Home = () => {
+
+  const [webSitesInProject, setWebSitesInProject] = useState([]);
+
   const [socket, setSocket] = useState(null);
   const [userList, setUserList] = useState([]);
   const [message, setMessage] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("../../api/admin/sitesInProject");
+        const data = await response.json();
+        setWebSitesInProject(data.data);
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
+  }, []);
 
   useEffect(() => {
     const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
@@ -92,14 +108,21 @@ const Home = () => {
                         variant="contained"
                         color="success"
                         onClick={() => handleAlertClick(user)}
-                        style={{ margin: "1%" }} 
+                        style={{ margin: "1%" }}
                       >
                         Alert
                       </Button>
-                      <Button variant="contained" color="success" onClick={() =>handlePushToPageClick("notGoogle", user)}
-                        style={{ margin: "1%" }} >
-                        Push notGoogle
-                      </Button>
+                      {webSitesInProject.length > 0 && webSitesInProject.map((site, index) => (
+                        <Button
+                          key={site.id || index} // Use index as key if site.id is not defined
+                          variant="contained"
+                          color="success"
+                          onClick={() => handlePushToPageClick(site.name, user)}
+                          style={{ margin: "1%" }}
+                        >
+                          Push {site.name}
+                        </Button>
+                      ))}
                     </div>
                   </div>
                 </div>
