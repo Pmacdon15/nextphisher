@@ -4,8 +4,7 @@
 - [Description](#Description)
 - [Disclaimer](#Disclaimer)
 - [Features](#Features)
-  - [Current Features](#Current-Features)
-  - [Coming Soon](#Coming-Soon)
+  - [Current Features](#Current-Features)  
 - [Cloning](#Cloning)
 - [Setup](#Setup)
 - [Start Up](#Start-Up)
@@ -34,21 +33,12 @@ This project is intended solely for educational purposes and ethical research in
 4 QR Codes for Service Links:
 - QR codes are provided, linking to each service in the Admin Dashboard.
 
-## Coming Soon
-
-1 Linked Decoy Site After Phishing Input:
-- Redirect users to the decoy site after phishing input to create a seamless experience.
-- Enhancement: Design the decoy site to be engaging and authentic.
-
-2 User Redirection Abilities:
+5 User Redirection Abilities:
 - Allow users to be redirected to different sites while on the decoy site and subsequently on the phishing sites.
 
-3 Alerts for Phishing Websites:
+6 Alerts for Phishing Websites:
 - Enable sending alerts to the phishing websites themselves.
 - Enhancement: Ensure that the alerts align with the decoy site’s design.
-
-4 Connected User Redirection:
-- Provide the ability to redirect connected users to different sites.
 
 # Cloning
 1. Clone repository(git ssh method) run this command: 
