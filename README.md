@@ -25,7 +25,6 @@ This project is intended solely for educational purposes and ethical research in
 
 2. Decoy Site with Custom Alerts:
 - The decoy site allows administrators to send custom alerts from the decoy controller screen in the admin dashboard.
-- Enhancement: Make the decoy site more convincing by adding interactive elements and ensuring it closely resembles a legitimate service.
 
 3. Local Storage for Collected User Data:
 - User data collected during phishing input is stored locally.
@@ -38,7 +37,6 @@ This project is intended solely for educational purposes and ethical research in
 
 6. Alerts for Phishing Websites:
 - Enable sending alerts to the phishing websites themselves.
-- Enhancement: Ensure that the alerts align with the decoy site’s design.
 
 # Cloning
 1. Clone repository(git ssh method) run this command: 
