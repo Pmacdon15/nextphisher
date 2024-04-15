@@ -5,6 +5,7 @@ import decoyStyles from "./decoy.module.css";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
+  
   const [socket, setSocket] = useState(null);
   const [ipv4, setIpv4] = useState(null);
   const router = useRouter();

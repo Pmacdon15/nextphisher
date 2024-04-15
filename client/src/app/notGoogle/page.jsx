@@ -4,10 +4,11 @@ import io from "socket.io-client";
 import { useRouter } from "next/navigation";
 import Login from '@/components/login/login';
 
-const notGoogle = () => {  
+const NotGoogle = () => {  
   const [socket, setSocket] = useState(null);
   const [ipv4, setIpv4] = useState(null);
   const router = useRouter();
+  
 
   useEffect(() => {
     const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
@@ -88,4 +89,4 @@ const notGoogle = () => {
   );
 };
 
-export default notGoogle;
+export default NotGoogle;
