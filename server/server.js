@@ -63,18 +63,15 @@ io.on("connection", (socket) => {
   });
 
   // Handle user disconnecting
-  // socket.on("disconnect", () => {
-  //   const userName = socket.userName || socket.id;
-  //   // Remove the user from the connectedUsers object
-  //   delete connectedUsers[socket.id];
 
-  // // Emit the 'userList' event with the updated user list
-  // io.emit("userList", Object.values(connectedUsers));
 
-  // io.emit("message", `${userName} left the chat`);
+  socket.on("disconnect", () => {
+    delete connectedUsers[socket.id];
+    console.log("User List: " + JSON.stringify(connectedUsers));
+    io.emit("UserList", Object.values(connectedUsers));
+  });
 
-  // console.log(`${userName} left the chat`);
-  // });
+ 
 });
 
 const PORT = process.env.PORT || 3069;
