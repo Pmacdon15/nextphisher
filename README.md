@@ -103,7 +103,7 @@ pm2 start npm --name nextPisherServer -- run start-server
 ## Links
 
 ### Client Side
-- notGoogle(pishing) User data will be stored when entered on this page.
+- notGoogle(phishing) User data will be stored when entered on this page.
 ```HTML
 http://"Your backend Ip here":3000/notGoogle
 ```
@@ -121,5 +121,4 @@ http://"Your backend Ip here":3000/decoy
 http://"Your backend Ip here":3000/
 ```
 (Remove "")
-You will be asked to Login with the password you set earlier.
-Through the admin dashboard you will be able to access a number of features such as getting the Qr code for active services allowing users to link to the sites from the admin dashboard for ease of use. A link to the stored user data page, collected from the pitching pages. Finally the decoy controller page which allows you to send custom alerts to clients on the decoy page.
+You will be asked to Login with the password you set earlier. Through the Admin Dashboard you will be able to access a number of features such as getting the Qr code for active services allowing users to link to the sites from the Admin Dashboard for ease of use. A link to the stored user data page, collected from the phishing pages. Finally the decoy controller page which allows you to send custom alerts to clients on the decoy page.
