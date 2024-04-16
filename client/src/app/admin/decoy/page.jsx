@@ -21,11 +21,26 @@ const Home = () => {
       const fetchData = async () => {
         const response = await fetch("../../api/admin/auth");
         const data = await response.json();
+        console.log(data);
+        
         if (data.message === "Authorized" && data.userData.username === "admin") {
           console.log("Authorized");
-          setCurrentUser(data.data);
+          setCurrentUser(data.userData.username);
         }
-        setCurrentUser(data.data);
+        
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("../../api/admin/sitesInProject");
+        const data = await response.json();
+        setWebSitesInProject(data.data);
       };
       fetchData();
     } catch (error) {
@@ -85,7 +100,7 @@ const Home = () => {
       console.error("Socket is not initialized.");
     }
   };
-
+console.log(currentUser)
   return (
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
