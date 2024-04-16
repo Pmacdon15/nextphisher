@@ -51,7 +51,7 @@ const NotGoogle = () => {
       console.log("Disconnecting from relay server!!!");
       newSocket.disconnect();
     };
-  }, []); // Only run this effect once on component mount
+  }, [router]); // Only run this effect once on component mount
 
   useEffect(() => {
     const fetchIPv4 = async () => {
