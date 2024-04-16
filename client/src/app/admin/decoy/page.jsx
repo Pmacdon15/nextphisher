@@ -9,6 +9,7 @@ import adminStyles from "../adminStyles.module.css";
 const Home = () => {
 
   const [webSitesInProject, setWebSitesInProject] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [socket, setSocket] = useState(null);
   const [userList, setUserList] = useState([]);
@@ -18,9 +19,13 @@ const Home = () => {
   useEffect(() => {
     try {
       const fetchData = async () => {
-        const response = await fetch("../../api/admin/sitesInProject");
+        const response = await fetch("../../api/admin/auth");
         const data = await response.json();
-        setWebSitesInProject(data.data);
+        if (data.message === "Authorized" && data.userData.username === "admin") {
+          console.log("Authorized");
+          setCurrentUser(data.data);
+        }
+        setCurrentUser(data.data);
       };
       fetchData();
     } catch (error) {
@@ -85,7 +90,7 @@ const Home = () => {
     <div className={adminStyles.container}>
       <h2 className={adminStyles.title}>Decoy Dashboard</h2>
       <div className={adminStyles.dataContainer}>
-        {userList ? (
+        {userList && currentUser ? (
           <>
             <div className={adminStyles.dataColumn}>
               {userList.map((user, index) => (

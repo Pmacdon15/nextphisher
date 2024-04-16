@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import decoyStyles from "./decoy.module.css";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
   
