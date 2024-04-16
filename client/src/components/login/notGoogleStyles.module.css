@@ -44,22 +44,31 @@
 .button {
      margin: 5px;
 }
-
 /* For cell phone screens */
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1050px) {
     .formContainer {
-        width: 80%;
+        width: 50%;
         margin-top: 10%;
     }
-
+    .loginImage {
+        width: 90%;
+    }
 }
-/* For cell phone screens */
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 650px) {
     .formContainer {
         width: 80%;
         margin-top: 10%;
     }
     .loginImage {
         width: 90%;
-    }  
+    }
+}
+@media only screen and (max-width: 350px) {
+    .formContainer {
+        width: 90%;
+        margin-top: 10%;
+    }
+    .loginImage {
+        width: 90%;
+    }
 }
