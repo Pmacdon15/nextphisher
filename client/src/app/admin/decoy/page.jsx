@@ -11,10 +11,7 @@ const Home = () => {
   const [webSitesInProject, setWebSitesInProject] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const [socket, setSocket] = useState(null);
-  const [userList, setUserList] = useState([]);
-  const [message, setMessage] = useState("");
-  const router = useRouter();
+
 
   useEffect(() => {
     try {
@@ -48,11 +45,14 @@ const Home = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
-    const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
-    const newSocket = io(`ws://${backEndIp}:${backEndPort}`);
 
+  const [socket, setSocket] = useState(null);
+  const [userList, setUserList] = useState([]);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const newSocket = io(`ws://localhost:3069`);
     setSocket(newSocket);
 
     newSocket.emit("join", "Decoy Controller");
@@ -76,12 +76,13 @@ const Home = () => {
   }, []);
 
   const handleAlertClick = (userId) => {
-    if (socket) {
+    if (socket && socket.connected) {
       socket.emit("alert", message, { userId: `${userId}` });
     } else {
-      console.error("Socket is not initialized.");
+      console.error("Socket is not initialized or connected.");
     }
   };
+
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
   };
@@ -94,12 +95,13 @@ const Home = () => {
 
   const handlePushToPageClick = (site, userId) => {
     console.log("Pushing to page", site);
-    if (socket) {
+    if (socket && socket.connected) {
       socket.emit("pushToPage", site, { userId: `${userId}` });
     } else {
-      console.error("Socket is not initialized.");
+      console.error("Socket is not initialized or connected.");
     }
   };
+
 console.log(currentUser)
   return (
     <div className={adminStyles.container}>
