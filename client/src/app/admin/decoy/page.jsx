@@ -52,25 +52,24 @@ const Home = () => {
       userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
     }
-    function handleAlert(message){
-      console.log("Alerting user with message: ", message);
-      alert(message);
-    }
+    // function handleAlert(message){
+    //   console.log("Alerting user with message: ", message);
+    //   alert(message);
+    // }
 
-    function handlePushToPage(site) {
-      
-      router.push(site);
-    }
+    // function handlePushToPage(site) {      
+    //   router.push(site);
+    // }
 
     socket.on("connect", onConnect);
-    socket.on("alert", handleAlert);
-    socket.on("pushToPage", handlePushToPage);
+    // socket.on("alert", handleAlert);
+    // socket.on("pushToPage", handlePushToPage);
     socket.on("disconnect", onDisconnect);
 
     return () => {
       socket.off("connect", onConnect);
-      socket.off("alert", handleAlert);      
-      socket.off("pushToPage", handlePushToPage);
+      // socket.off("alert", handleAlert);      
+      // socket.off("pushToPage", handlePushToPage);
       socket.off("UserList", handleUserList);
       socket.off("disconnect", onDisconnect);
     };
