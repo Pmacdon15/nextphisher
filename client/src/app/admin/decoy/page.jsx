@@ -5,14 +5,15 @@ import io from "socket.io-client";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import adminStyles from "../adminStyles.module.css";
+import { socket } from "../../socket.js";
 
 const Home = () => {
 
   const [webSitesInProject, setWebSitesInProject] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const [socket, setSocket] = useState(null);
-  const [userList, setUserList] = useState([]);
+  // const [socket, setSocket] = useState(null);
+  // const [userList, setUserList] = useState([]);
   const [message, setMessage] = useState("");
   const router = useRouter();
 
@@ -48,30 +49,57 @@ const Home = () => {
     }
   }, []);
 
+  const [isConnected, setIsConnected] = useState(false);
+  const [transport, setTransport] = useState("N/A");
+  const [userList, setUserList] = useState([]);
+
   useEffect(() => {
-    const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
-    const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
-    const newSocket = io(`ws://${backEndIp}:${backEndPort}`);
+    if (socket.connected) {
+      onConnect();
+    }
 
-    setSocket(newSocket);
+    function onConnect() {
+      setIsConnected(true);
+      setTransport(socket.io.engine.transport.name);
 
-    newSocket.emit("join", "Decoy Controller");
+      socket.io.engine.on("upgrade", (transport) => {
+        setTransport(transport.name);
+      });
 
-    newSocket.on("connect", () => {
-      console.log("Connected to relay server!!!");
-    });
+      socket.emit("join", "Decoy");
+      socket.on("UserList", handleUserList);
+    }
 
-    newSocket.on("UserList", (userList) => {
+    function onDisconnect() {
+      setIsConnected(false);
+      setTransport("N/A");
+      // Remove event listener when disconnecting
+      socket.off("UserList", handleUserList);
+    }
+
+    // Define function to handle "UserList" event
+    function handleUserList(userList) {
       userList = userList.filter(
         (user, index) => userList.indexOf(user) === index && user !== null
       );
       userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
-    });
+    }
+    // const handleAlertClick = (userId) => {
+    //   if (socket) {
+    //     socket.emit("alert", message, { userId: `${userId}` });
+    //   } else {
+    //     console.error("Socket is not initialized.");
+    //   }
+    // };
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
 
     return () => {
-      console.log("Disconnecting from relay server!!!");
-      newSocket.disconnect();
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("UserList", handleUserList);
     };
   }, []);
 
