@@ -15,43 +15,10 @@ const Home = () => {
   // const [socket, setSocket] = useState(null);
   // const [userList, setUserList] = useState([]);
   const [message, setMessage] = useState("");
-  const router = useRouter();
-
-  useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch("../../api/admin/auth");
-        const data = await response.json();
-        console.log(data);
-        
-        if (data.message === "Authorized" && data.userData.username === "admin") {
-          console.log("Authorized");
-          setCurrentUser(data.userData.username);
-        }
-        
-      };
-      fetchData();
-    } catch (error) {
-      console.error("Error reading file", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch("../../api/admin/sitesInProject");
-        const data = await response.json();
-        setWebSitesInProject(data.data);
-      };
-      fetchData();
-    } catch (error) {
-      console.error("Error reading file", error);
-    }
-  }, []);
-
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
   const [userList, setUserList] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (socket.connected) {
@@ -85,16 +52,108 @@ const Home = () => {
       userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
     }
-   
+    function handleAlert(message){
+      console.log("Alerting user with message: ", message);
+      alert(message);
+    }
+
+    function handlePushToPage(site) {
+      
+      router.push(site);
+    }
+
     socket.on("connect", onConnect);
+    socket.on("alert", handleAlert);
+    socket.on("pushToPage", handlePushToPage);
     socket.on("disconnect", onDisconnect);
 
     return () => {
       socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
+      socket.off("alert", handleAlert);      
+      socket.off("pushToPage", handlePushToPage);
       socket.off("UserList", handleUserList);
+      socket.off("disconnect", onDisconnect);
     };
+  }, [router]);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("../../api/admin/auth");
+        const data = await response.json();
+        console.log(data);
+        
+        if (data.message === "Authorized" && data.userData.username === "admin") {
+          console.log("Authorized");
+          setCurrentUser(data.userData.username);
+        }
+        
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
   }, []);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("../../api/admin/sitesInProject");
+        const data = await response.json();
+        setWebSitesInProject(data.data);
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
+  }, []);
+
+  // const [isConnected, setIsConnected] = useState(false);
+  // const [transport, setTransport] = useState("N/A");
+  // const [userList, setUserList] = useState([]);
+
+  // useEffect(() => {
+  //   if (socket.connected) {
+  //     onConnect();
+  //   }
+
+  //   function onConnect() {
+  //     setIsConnected(true);
+  //     setTransport(socket.io.engine.transport.name);
+
+  //     socket.io.engine.on("upgrade", (transport) => {
+  //       setTransport(transport.name);
+  //     });
+
+  //     socket.emit("join", "Decoy");
+  //     socket.on("UserList", handleUserList);
+  //   }
+
+  //   function onDisconnect() {
+  //     setIsConnected(false);
+  //     setTransport("N/A");
+  //     // Remove event listener when disconnecting
+  //     socket.off("UserList", handleUserList);
+  //   }
+
+  //   // Define function to handle "UserList" event
+  //   function handleUserList(userList) {
+  //     userList = userList.filter(
+  //       (user, index) => userList.indexOf(user) === index && user !== null
+  //     );
+  //     userList = userList.filter((user) => user !== "Decoy Controller");
+  //     setUserList(userList);
+  //   }
+   
+  //   socket.on("connect", onConnect);
+  //   socket.on("disconnect", onDisconnect);
+
+  //   return () => {
+  //     socket.off("connect", onConnect);
+  //     socket.off("disconnect", onDisconnect);
+  //     socket.off("UserList", handleUserList);
+  //   };
+  // }, []);
 
   const handleAlertClick = (userId) => {
     if (socket) {
