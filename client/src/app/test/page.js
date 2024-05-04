@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { socket } from "../socket.js";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
   const [userList, setUserList] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (socket.connected) {
@@ -40,16 +42,24 @@ export default function Home() {
       setUserList(userList);
     }
     function handleAlert(message){
+      console.log("Alerting user with message: ", message);
       alert(message);
+    }
+
+    function handlePushToPage(site) {
+      
+      router.push(site);
     }
 
     socket.on("connect", onConnect);
     socket.on("alert", handleAlert);
+    socket.on("pushToPage", handlePushToPage);
     socket.on("disconnect", onDisconnect);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("alert", handleAlert);      
+      socket.off("pushToPage", handlePushToPage);
       socket.off("UserList", handleUserList);
       socket.off("disconnect", onDisconnect);
     };
