@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Login from '@/components/login/login';
 
 const NotGoogle = () => {  
-  //const [socket, setSocket] = useState(null);
   const [ipv4, setIpv4] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
@@ -25,7 +24,7 @@ const NotGoogle = () => {
         setTransport(transport.name);
       });
 
-      socket.emit("join", "Decoy");
+      socket.emit("join", ipv4);
       socket.on("UserList", handleUserList);
     }
 
@@ -61,8 +60,7 @@ const NotGoogle = () => {
     socket.on("disconnect", onDisconnect);
 
     return () => {
-      socket.off("connect", onConnect);
-      
+      socket.off("connect", onConnect);      
       socket.off("disconnect", onDisconnect);
     };
   }, [ipv4, router]); // Only run this effect once on component mount

@@ -1,86 +1,88 @@
 'use client';
 import { useEffect, useState } from "react";
-import io from "socket.io-client";
+import { socket } from "../socket.js";
 import decoyStyles from "./decoy.module.css";
 import { useRouter } from 'next/navigation';
 
 const Home = () => {
-  
-  const [socket, setSocket] = useState(null);
   const [ipv4, setIpv4] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [transport, setTransport] = useState("N/A");
+  const [userList, setUserList] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
-    const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
+    if (socket.connected) {
+      onConnect();
+    }
 
-    // Create a new WebSocket connection
-    const newSocket = io(`ws://${backEndIp}:${backEndPort}`);
+    function onConnect() {
+      setIsConnected(true);
+      setTransport(socket.io.engine.transport.name);
 
-    // Set up event listeners
-    newSocket.on("connect", () => {
-      console.log("Connected to relay server!!!");
-    });
+      socket.io.engine.on("upgrade", (transport) => {
+        setTransport(transport.name);
+      });
 
-    newSocket.on("alert", (message, { userId }) => {
-      if (userId === newSocket.userId) {
-        console.log("Alerting user with message: ", message);
-        alert(message);
-      }
-    });
+      socket.emit("join", ipv4);
+      socket.on("UserList", handleUserList);
+    }
 
-    newSocket.on("pushToPage", (site, { userId }) => {
-      if (userId === newSocket.userId) {
-        console.log("Pushing user to page: ", site);
-        const url = (`/${site}`);
-        console.log("redirecting to: ", url);
-        router.push(url);
-      }
-    });
+    function onDisconnect() {
+      setIsConnected(false);
+      setTransport("N/A");
+      // Remove event listeners when disconnecting
+      socket.off("alert", handleAlert);      
+      socket.off("pushToPage", handlePushToPage);
+      socket.off("UserList", handleUserList);
+    }
 
-    newSocket.on("error", (error) => {
-      console.error("Socket error:", error);
-    });
+    // Define function to handle "UserList" event
+    function handleUserList(userList) {
+      userList = userList.filter(
+        (user, index) => userList.indexOf(user) === index && user !== null
+      );
+      userList = userList.filter((user) => user !== "Decoy Controller");
+      setUserList(userList);
+    }
+    function handleAlert(message){
+      console.log("Alerting user with message: ", message);
+      alert(message);
+    }
 
-    // Store the socket instance in state
-    setSocket(newSocket);
+    function handlePushToPage(site) {      
+      router.push(site);
+    }
 
-    // Cleanup function
+    socket.on("connect", onConnect);
+    socket.on("alert", handleAlert);
+    socket.on("pushToPage", handlePushToPage);
+    socket.on("disconnect", onDisconnect);
+
     return () => {
-      // Disconnect socket when component unmounts
-      console.log("Disconnecting from relay server!!!");
-      newSocket.disconnect();
+      socket.off("connect", onConnect);      
+      socket.off("disconnect", onDisconnect);
     };
-  }, [router]); // Only run this effect once on component mount
+  }, [ipv4, router]); // Only run this effect once on component mount
 
   useEffect(() => {
     const fetchIPv4 = async () => {
       try {
         const response = await fetch(`https://api.ipify.org?format=json`);
-
         if (!response.ok) {
           throw new Error("Failed to fetch IPv4 address");
         }
         const result = await response.json();
         setIpv4(result.ip);
-        console.log(result.ip);
+        //console.log(result.ip);
       } catch (error) {
         console.error("Error fetching IPv4 address:", error.message);
       }
     };
 
     fetchIPv4();
-  }, []);
+  }, [router]);
 
-  console.log(ipv4);
-
-  // Ensure that socket is initialized before emitting events
-  useEffect(() => {
-    if (socket && ipv4) {
-      socket.emit("join", ipv4);
-      socket.userId = ipv4;
-    }
-  }, [socket, ipv4]);
 
   return (
     <div className={decoyStyles.container}>

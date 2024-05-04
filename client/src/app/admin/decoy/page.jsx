@@ -33,7 +33,7 @@ const Home = () => {
         setTransport(transport.name);
       });
 
-      socket.emit("join", "Decoy");
+      socket.emit("join", "Decoy Controller");
       socket.on("UserList", handleUserList);
     }
 
