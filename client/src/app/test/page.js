@@ -39,15 +39,19 @@ export default function Home() {
       userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
     }
-    
+    function handleAlert(message){
+      alert(message);
+    }
 
     socket.on("connect", onConnect);
+    socket.on("alert", handleAlert);
     socket.on("disconnect", onDisconnect);
 
     return () => {
       socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
+      socket.off("alert", handleAlert);      
       socket.off("UserList", handleUserList);
+      socket.off("disconnect", onDisconnect);
     };
   }, []);
 

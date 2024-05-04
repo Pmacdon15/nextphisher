@@ -85,14 +85,7 @@ const Home = () => {
       userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
     }
-    // const handleAlertClick = (userId) => {
-    //   if (socket) {
-    //     socket.emit("alert", message, { userId: `${userId}` });
-    //   } else {
-    //     console.error("Socket is not initialized.");
-    //   }
-    // };
-
+   
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
 
@@ -105,6 +98,7 @@ const Home = () => {
 
   const handleAlertClick = (userId) => {
     if (socket) {
+      console.log("Alerting user with message: ", message);
       socket.emit("alert", message, { userId: `${userId}` });
     } else {
       console.error("Socket is not initialized.");
