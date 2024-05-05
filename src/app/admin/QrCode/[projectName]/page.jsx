@@ -9,6 +9,22 @@ import Link from "next/link";
 export default function QrCode({ params }) {
   const webSiteZToShowQrCodeFor = params.projectName;
   const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [userAuth, setUserAuth] = useState(false);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("/api/admin/auth");
+        const data = await response.json();
+        if (data.message === "Authorized") {
+          setUserAuth(true);
+        }
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +40,7 @@ export default function QrCode({ params }) {
         url = "http://" + ip.ip + ":3000/" + webSiteZToShowQrCodeFor;
 
       } catch (error) {
-        console.error("Error getting server IP address");
+        console.error("Error getting server IP address error: ", error);
       }
 
       try {
@@ -51,14 +67,7 @@ export default function QrCode({ params }) {
   console.log(qrCodeUrl);
 
   return (
-    <div className={adminStyles.dashboardContainer}>
-      <div className={adminStyles.contentContainer}>
-        <Image
-          src={adminImage}
-          // width={300}
-          alt="Next Pisher"
-          className={adminStyles.image}
-        />
+    <div>
         <h2 className={adminStyles.title}>Qr Code Link</h2>
         {qrCodeUrl ? (
           <div className={adminStyles.contentRow}>
@@ -71,7 +80,11 @@ export default function QrCode({ params }) {
             />{" "}
           </div>
         ) : (
-          <p>Loading or Not Signed In</p>
+          userAuth? (
+            <p>QR Code loading....</p>
+          ) : (
+            <p>Unauthorized</p>
+          )
         )}
         <div className={adminStyles.contentRow}>
           <Button variant="contained" color="success">
@@ -79,6 +92,6 @@ export default function QrCode({ params }) {
           </Button>
         </div>
       </div>
-    </div>
+    
   );
 }

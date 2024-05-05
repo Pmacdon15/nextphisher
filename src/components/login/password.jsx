@@ -52,6 +52,7 @@ const Password = ({ onSubmit, argument }) => {
           id="outlined-basic"
           {...register("password", { required: true })}
           label="Password"
+          type="password"
           variant="outlined"
           autoFocus={true}
         />

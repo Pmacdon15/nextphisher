@@ -1,15 +1,29 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import adminImage from "../../../public/admin.png";
 import { useState, useEffect } from "react";
 import adminStyles from "./adminStyles.module.css";
 import Button from "@mui/material/Button";
 
 export default function AdminDashboard() { // Change component name
   const [webSitesInProject, setWebSitesInProject] = useState([]);
+  const [userAuth, setUserAuth] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("/api/admin/auth");
+        const data = await response.json();
+        if (data.message === "Authorized") {
+          setUserAuth(true);
+        }
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -48,14 +62,14 @@ export default function AdminDashboard() { // Change component name
     firstHalf = webSitesInProject.slice(0, halfIndex);
     secondHalf = webSitesInProject.slice(halfIndex);
   }
+  // webSitesInProject !== undefined && webSitesInProject.length > 0 ?
 
   return (
-    <div className={adminStyles.dashboardContainer}>
-      <div className={adminStyles.contentContainer}>
-        <Image src={adminImage} alt="Next Pisher" className={adminStyles.image} />
-        <h2 className={adminStyles.title}>Admin Dashboard</h2>
-        {webSitesInProject !== null && webSitesInProject !== undefined ? (
-          webSitesInProject.length > 0 ? (
+    <div>
+      <h2 className={adminStyles.title}>Admin Dashboard</h2>
+      {userAuth ? (
+        <>
+          {webSitesInProject !== undefined && webSitesInProject.length > 0 ? (
             <div>
               <div className={adminStyles.contentRow}>
                 {webSitesInProject.map((webSite, index) => (
@@ -68,39 +82,32 @@ export default function AdminDashboard() { // Change component name
                   </Link>
                 ))}
               </div>
-
               <div className={adminStyles.contentRow}>
-                <Button variant="contained" color="success" style={{ margin: "1%" }}>
-                  <Link href="/admin/decoy">Decoy Controller</Link>
+                <Button variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
+                  Decoy Controller
                 </Button>
-                <Button variant="contained" color="success" style={{ margin: "1%" }}>
-                  <Link href="/admin/userData">User Data</Link>
+                <Button variant="contained" onClick={() => router.push("/admin/userData")} color="success" style={{ margin: "1%" }}>
+                  User Data
                 </Button>
-                <Button
-                  onClick={logout}
-                  variant="contained"
-                  color="success"
-                  style={{ margin: "1%" }}
-                >
+                <Button onClick={logout} variant="contained" color="success" style={{ margin: "1%" }}>
                   Logout
                 </Button>
               </div>
             </div>
           ) : (
-            <p>No projects available</p>
-          )
-        ) : (
-          <div className={adminStyles.contentRow}>
-            <p>Loading or Not Signed In</p>
-            <Button variant="contained" color="success">
-              <Link href="/">Login</Link>
-            </Button>
-          </div>
-        )}
-      </div>
+            <p>Loading...</p>
+          )}
+        </>
+      ) : (
+        <div>
+          <p>Unauthorized</p>
+          <Button variant="contained" onClick={() => router.push("/")} color="success">
+            Login
+          </Button>
+        </div>
+      )}
     </div>
   );
-
-};
+}
 
 
