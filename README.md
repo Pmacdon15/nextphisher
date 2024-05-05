@@ -4,7 +4,8 @@
 - [Description](#Description)
 - [Disclaimer](#Disclaimer)
 - [Features](#Features)
-  - [Current Features](#Current-Features)  
+  - [Current Features](#Current-Features) 
+  - [Coming Soon](#Coming-Soon)  
 - [Cloning](#Cloning)
 - [Setup](#Setup)
 - [Start Up](#Start-Up)
@@ -37,6 +38,10 @@ This project is intended solely for educational purposes and ethical research in
 
 6. Alerts for Phishing Websites:
  - Enable sending alerts to the phishing websites themselves.
+
+## Coming Soon
+1. Location Tracking
+ - Location tracking the ability to see where the decoy user is.
 
 # Cloning
 
