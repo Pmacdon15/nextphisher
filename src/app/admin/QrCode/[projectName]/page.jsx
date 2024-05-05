@@ -51,14 +51,7 @@ export default function QrCode({ params }) {
   console.log(qrCodeUrl);
 
   return (
-    <div className={adminStyles.dashboardContainer}>
-      <div className={adminStyles.contentContainer}>
-        <Image
-          src={adminImage}
-          // width={300}
-          alt="Next Pisher"
-          className={adminStyles.image}
-        />
+    <div >
         <h2 className={adminStyles.title}>Qr Code Link</h2>
         {qrCodeUrl ? (
           <div className={adminStyles.contentRow}>
@@ -71,7 +64,7 @@ export default function QrCode({ params }) {
             />{" "}
           </div>
         ) : (
-          <p>Loading or Not Signed In</p>
+          <p>QR Code loading....</p>
         )}
         <div className={adminStyles.contentRow}>
           <Button variant="contained" color="success">
@@ -79,6 +72,6 @@ export default function QrCode({ params }) {
           </Button>
         </div>
       </div>
-    </div>
+    
   );
 }
