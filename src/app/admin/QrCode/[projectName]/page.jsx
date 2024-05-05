@@ -20,7 +20,9 @@ export default function QrCode({ params }) {
         if (ip.message === "Unauthorized") {
           throw new Error("Unauthorized");
         }
+
         url = "http://" + ip.ip + ":3000/" + webSiteZToShowQrCodeFor;
+
       } catch (error) {
         console.error("Error getting server IP address");
       }
@@ -60,9 +62,9 @@ export default function QrCode({ params }) {
         <h2 className={adminStyles.title}>Qr Code Link</h2>
         {qrCodeUrl ? (
           <div className={adminStyles.contentRow}>
-            <Image     
-            width={250}
-            height={250}         
+            <Image
+              width={250}
+              height={250}
               src={qrCodeUrl}
               alt="QR Code"
               className={adminStyles.image}

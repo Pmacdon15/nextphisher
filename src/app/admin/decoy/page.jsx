@@ -5,16 +5,63 @@ import io from "socket.io-client";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import adminStyles from "../adminStyles.module.css";
+import { socket } from "../../socket.js";
 
 const Home = () => {
 
   const [webSitesInProject, setWebSitesInProject] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const [socket, setSocket] = useState(null);
-  const [userList, setUserList] = useState([]);
+  // const [socket, setSocket] = useState(null);
+  // const [userList, setUserList] = useState([]);
   const [message, setMessage] = useState("");
+  const [isConnected, setIsConnected] = useState(false);
+  const [transport, setTransport] = useState("N/A");
+  const [userList, setUserList] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    if (socket.connected) {
+      onConnect();
+    }
+
+    function onConnect() {
+      setIsConnected(true);
+      setTransport(socket.io.engine.transport.name);
+
+      socket.io.engine.on("upgrade", (transport) => {
+        setTransport(transport.name);
+      });
+
+      socket.emit("join", "Decoy Controller");
+      socket.on("UserList", handleUserList);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+      setTransport("N/A");
+      // Remove event listener when disconnecting
+      socket.off("UserList", handleUserList);
+    }
+
+    // Define function to handle "UserList" event
+    function handleUserList(userList) {
+      userList = userList.filter(
+        (user, index) => userList.indexOf(user) === index && user !== null
+      );
+      userList = userList.filter((user) => user !== "Decoy Controller");
+      setUserList(userList);
+    }
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("UserList", handleUserList);
+      socket.off("disconnect", onDisconnect);
+    };
+  }, [router]);
 
   useEffect(() => {
     try {
@@ -48,35 +95,9 @@ const Home = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const backEndIp = process.env.NEXT_PUBLIC_BACK_END_IP;
-    const backEndPort = process.env.NEXT_PUBLIC_BACK_END_PORT;
-    const newSocket = io(`ws://${backEndIp}:${backEndPort}`);
-
-    setSocket(newSocket);
-
-    newSocket.emit("join", "Decoy Controller");
-
-    newSocket.on("connect", () => {
-      console.log("Connected to relay server!!!");
-    });
-
-    newSocket.on("UserList", (userList) => {
-      userList = userList.filter(
-        (user, index) => userList.indexOf(user) === index && user !== null
-      );
-      userList = userList.filter((user) => user !== "Decoy Controller");
-      setUserList(userList);
-    });
-
-    return () => {
-      console.log("Disconnecting from relay server!!!");
-      newSocket.disconnect();
-    };
-  }, []);
-
   const handleAlertClick = (userId) => {
     if (socket) {
+      console.log("Alerting user with message: ", message);
       socket.emit("alert", message, { userId: `${userId}` });
     } else {
       console.error("Socket is not initialized.");
@@ -100,6 +121,7 @@ const Home = () => {
       console.error("Socket is not initialized.");
     }
   };
+
 console.log(currentUser)
   return (
     <div className={adminStyles.container}>

@@ -1,28 +1,30 @@
 {
+  "type": "module",
   "name": "nextphisher",
-  "version": "1.0.0",
-  "description": "A simple project That started with storing and displaying users data that will hopfully evolved into much more taking inspiration from beEF.",
-  "main": "npm start",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start-client": "cd client && npm run start",
-    "start-server": "cd server && npm run start",    
-    "install": "cd client && npm install && cd ../server && npm install",
-    "setup-client": "cd client && node setup.js",
-    "setup-server": "cd server && node setup.js",
-    "setup": "npm run setup-client && npm run setup-server",
-    "build-client": "cd client && npm run build"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "set NODE_ENV=production&& node server.js",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Pmacdon15/nextphisher.git"
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.15",
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "next": "14.1.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.2",
+    "sharp": "^0.33.3",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5"
   },
-  "keywords": [
-    "Pishing"
-  ],
-  "author": "Patrick MacDonald",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Pmacdon15/nextphisher/issues"
-  },
-  "homepage": "https://github.com/Pmacdon15/nextphisher#readme"
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4"
+  }
 }
