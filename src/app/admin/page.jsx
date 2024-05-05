@@ -1,8 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-// import Image from "next/image";
-// import adminImage from "../../../public/admin.png";
 import { useState, useEffect } from "react";
 import adminStyles from "./adminStyles.module.css";
 import Button from "@mui/material/Button";
@@ -102,7 +100,7 @@ export default function AdminDashboard() { // Change component name
         </>
       ) : (
         <div>
-          <p>Not signed in!</p>
+          <p>Unauthorized</p>
           <Button variant="contained" onClick={() => router.push("/")} color="success">
             Login
           </Button>

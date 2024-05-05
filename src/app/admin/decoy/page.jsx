@@ -166,11 +166,11 @@ const Home = () => {
               </div>
             ))
           ) : (
-            <h3 className={adminStyles.title} >No hooked Browsers!</h3>
+            <p>No hooked Browsers!</p>
           )}
         </div>
       ) : (
-        <h3>Not signed in!</h3>
+        <p>Unauthorized</p>
       )}
   
       <div className={adminStyles.contentRow}>

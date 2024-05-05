@@ -91,7 +91,7 @@ const AdminDashboard = () => {
           </div>
         </>
       ) : (
-        <p>Not signed in!</p>
+        <p>Unauthorized</p>
       )}
     </div>
   );
