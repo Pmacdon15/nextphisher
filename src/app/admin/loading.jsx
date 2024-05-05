@@ -7,7 +7,7 @@ export default function Loading() {
     const router = useRouter();
     return (
         <div className={adminStyles.contentRow}>
-            <p>Loading or not Signed In</p>
+            <p>Loading......</p>
             <Button variant="contained"  onClick={() => router.push("/")} color="success">
                Login
             </Button>

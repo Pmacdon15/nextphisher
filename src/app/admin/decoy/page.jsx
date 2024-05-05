@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import io from "socket.io-client";
+
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import adminStyles from "../adminStyles.module.css";
@@ -12,8 +12,6 @@ const Home = () => {
   const [webSitesInProject, setWebSitesInProject] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // const [socket, setSocket] = useState(null);
-  // const [userList, setUserList] = useState([]);
   const [message, setMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
@@ -69,12 +67,12 @@ const Home = () => {
         const response = await fetch("../../api/admin/auth");
         const data = await response.json();
         console.log(data);
-        
+
         if (data.message === "Authorized" && data.userData.username === "admin") {
           console.log("Authorized");
           setCurrentUser(data.userData.username);
         }
-        
+
       };
       fetchData();
     } catch (error) {
@@ -122,59 +120,57 @@ const Home = () => {
     }
   };
 
-console.log(currentUser)
+  console.log(currentUser)
   return (
-    <div className={adminStyles.container}>
-      <h2 className={adminStyles.title}>Decoy Dashboard</h2>
-      <div className={adminStyles.dataContainer}>
-        {userList && currentUser ? (
-          <>
-            <div className={adminStyles.dataColumn}>
-              {userList.map((user, index) => (
-                <div key={index} className={adminStyles.userData}>
-                  <div className={adminStyles.data}>
-                    <h2>Connected User</h2>
-                    <h3>{user}</h3>
-                    <div className={adminStyles.alertOptions}>
-                      <TextField
-                        id="message"
-                        label="Message"
-                        variant="standard"
-                        color="success"
-                        value={message}
-                        onChange={handleMessageChange}
-                        style={{ marginBottom: "1%" }}
-                        onKeyDown={(event) => handleTextFieldKeyPress(event, user)}
-                      />
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => handleAlertClick(user)}
-                        style={{ margin: "1%" }}
-                      >
-                        Alert
-                      </Button>
-                      {webSitesInProject.length > 0 && webSitesInProject.map((site, index) => (
-                        <Button
-                          key={site.id || index} // Use index as key if site.id is not defined
-                          variant="contained"
-                          color="success"
-                          onClick={() => handlePushToPageClick(site.name, user)}
-                          style={{ margin: "1%" }}
-                        >
-                          Push {site.name}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
+
+    <div>
+      {userList && currentUser ? (
+        <div className={adminStyles.dataColumn}>
+          {userList.map((user, index) => (
+            <div key={index} className={adminStyles.userData}>
+              <div className={adminStyles.data}>
+                <h2>Connected User</h2>
+                <h3>{user}</h3>
+                <div className={adminStyles.alertOptions}>
+                  <TextField
+                    id="message"
+                    label="Message"
+                    variant="standard"
+                    color="success"
+                    value={message}
+                    onChange={handleMessageChange}
+                    style={{ marginBottom: "1%" }}
+                    onKeyDown={(event) => handleTextFieldKeyPress(event, user)}
+                  />
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handleAlertClick(user)}
+                    style={{ margin: "1%" }}
+                  >
+                    Alert
+                  </Button>
+                  {webSitesInProject.length > 0 && webSitesInProject.map((site, index) => (
+                    <Button
+                      key={site.id || index} // Use index as key if site.id is not defined
+                      variant="contained"
+                      color="success"
+                      onClick={() => handlePushToPageClick(site.name, user)}
+                      style={{ margin: "1%" }}
+                    >
+                      Push {site.name}
+                    </Button>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </>
-        ) : (
-          <h3 className={adminStyles.title}>Loading or Not Signed In</h3>
-        )}
-      </div>
+          ))}
+        </div>
+
+      ) : (
+        <h3 className={adminStyles.title}>Loading or Not Signed In</h3>
+      )}
+
       <div className={adminStyles.contentRow}>
         <Button variant="contained" color="success" onClick={() => router.push("/admin")}>
           Back

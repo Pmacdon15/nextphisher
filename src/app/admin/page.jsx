@@ -52,7 +52,7 @@ export default function AdminDashboard() { // Change component name
   return (
     <div>
       <h2 className={adminStyles.title}>Admin Dashboard</h2>
-      {webSitesInProject.length > 0 ? (
+      {webSitesInProject !== undefined && webSitesInProject.length > 0 ? (
         <div>
           <div className={adminStyles.contentRow}>
             {webSitesInProject.map((webSite, index) => (
@@ -65,7 +65,7 @@ export default function AdminDashboard() { // Change component name
               </Link>
             ))}
           </div>
-
+  
           <div className={adminStyles.contentRow}>
             <Button variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
               Decoy Controller
@@ -84,10 +84,16 @@ export default function AdminDashboard() { // Change component name
           </div>
         </div>
       ) : (
-        <p>No projects available</p>
+        <div>
+          <p>Not signed in!</p>
+          <Button variant="contained" onClick={() => router.push("/")} color="success">
+            Login
+          </Button>
+        </div>
       )}
     </div>
   );
+  
 }
 
 
