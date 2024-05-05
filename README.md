@@ -57,7 +57,7 @@ The commands are:
 
 1. Install dependencies:
  ```Bash
- npm run i
+ npm i
  ```
 
 2. Setup .env file, run:
