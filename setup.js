@@ -1,16 +1,14 @@
-const fs = require('fs');
-const readline = require('readline');
+const fs = require("fs");
+const readline = require("readline");
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 const questions = [
-  'SECRET_KEY_JWT',
-  'SECRET_ADMIN_PASSWORD',
-  'NEXT_PUBLIC_BACK_END_PORT',
-  'NEXT_PUBLIC_BACK_END_IP'
+  "SECRET_KEY_JWT",
+  "SECRET_ADMIN_PASSWORD"
 ];
 
 function askQuestions(index, answers) {
@@ -27,9 +25,9 @@ function askQuestions(index, answers) {
 }
 
 function writeToFile(answers) {
-  const content = answers.join('\n');
-  fs.writeFileSync('.env', content); // Write to .env file
-  console.log('Config file created successfully!');
+  const content = answers.join("\n");
+  fs.writeFileSync(".env", content); // Write to .env file
+  console.log("Config file created successfully!");
 }
 
 askQuestions(0, []);

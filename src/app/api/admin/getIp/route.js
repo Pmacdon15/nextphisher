@@ -3,9 +3,6 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
-import fs from "fs";
-import path from "path";
-
 
 
 export async function GET(req) {
