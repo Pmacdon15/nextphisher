@@ -9,7 +9,23 @@ import Button from "@mui/material/Button";
 
 export default function AdminDashboard() { // Change component name
   const [webSitesInProject, setWebSitesInProject] = useState([]);
+  const [userAuth, setUserAuth] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch("/api/admin/auth");
+        const data = await response.json();
+        if (data.message === "Authorized") {
+          setUserAuth(true);
+        }
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Error reading file", error);
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -48,41 +64,42 @@ export default function AdminDashboard() { // Change component name
     firstHalf = webSitesInProject.slice(0, halfIndex);
     secondHalf = webSitesInProject.slice(halfIndex);
   }
+  // webSitesInProject !== undefined && webSitesInProject.length > 0 ?
 
   return (
     <div>
       <h2 className={adminStyles.title}>Admin Dashboard</h2>
-      {webSitesInProject !== undefined && webSitesInProject.length > 0 ? (
-        <div>
-          <div className={adminStyles.contentRow}>
-            {webSitesInProject.map((webSite, index) => (
-              <Link key={webSite.name} href={`/admin/QrCode/${webSite.name}`}>
-                <div className={adminStyles.siteData}>
-                  <p className={adminStyles.par}>
-                    Project Name: {webSite.name}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-  
-          <div className={adminStyles.contentRow}>
-            <Button variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
-              Decoy Controller
-            </Button>
-            <Button variant="contained" onClick={() => router.push("/admin/userData")} color="success" style={{ margin: "1%" }}>
-              User Data
-            </Button>
-            <Button
-              onClick={logout}
-              variant="contained"
-              color="success"
-              style={{ margin: "1%" }}
-            >
-              Logout
-            </Button>
-          </div>
-        </div>
+      {userAuth ? (
+        <>
+          {webSitesInProject !== undefined && webSitesInProject.length > 0 ? (
+            <div>
+              <div className={adminStyles.contentRow}>
+                {webSitesInProject.map((webSite, index) => (
+                  <Link key={webSite.name} href={`/admin/QrCode/${webSite.name}`}>
+                    <div className={adminStyles.siteData}>
+                      <p className={adminStyles.par}>
+                        Project Name: {webSite.name}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className={adminStyles.contentRow}>
+                <Button variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
+                  Decoy Controller
+                </Button>
+                <Button variant="contained" onClick={() => router.push("/admin/userData")} color="success" style={{ margin: "1%" }}>
+                  User Data
+                </Button>
+                <Button onClick={logout} variant="contained" color="success" style={{ margin: "1%" }}>
+                  Logout
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </>
       ) : (
         <div>
           <p>Not signed in!</p>
@@ -93,7 +110,6 @@ export default function AdminDashboard() { // Change component name
       )}
     </div>
   );
-  
 }
 
 
