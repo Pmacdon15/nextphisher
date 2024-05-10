@@ -1,6 +1,8 @@
 'use client';
 import { useRouter } from "next/navigation";
-import adminStyles from "@/app/admin/adminStyles.module.css";
+// import adminStyles from "@/app/admin/adminStyles.module.css";
+// import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
+import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
 import Button from "@mui/material/Button";
 import { logout } from "@/actions/logout.jsx";
 

@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken");
 import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
-import adminStyles from "@/app/admin/adminStyles.module.css";
+// import adminStyles from "@/app/admin/adminStyles.module.css";
+import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
 // import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
 import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
