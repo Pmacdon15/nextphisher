@@ -40,11 +40,11 @@ const userDataDisplay = async () => {
 
   const { data: dataSet } = await getUserData();
   revalidatePath('@/app/admin/userData/page.jsx')
+  
   return (
     <div>
       {dataSet.length > 0 ? (
         <div className={adminStyles.contentRow}>
-
           {dataSet.map((data, index) => (
             <div key={index} className={adminStyles.data}>
               <p className={adminStyles.par}>User Name: {data.username}</p>

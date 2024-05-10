@@ -3,7 +3,7 @@
 import UserDataDisplayServer from "@/components/userDataDisplay/serverComponent.jsx";
 import UserDataDisplayClient from "@/components/userDataDisplay/clientComponent.jsx";
 
-const AdminDashboard = () => {
+const userData = () => {
   return (
     <div>
       <UserDataDisplayClient>
@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   );
 
 };
-export default AdminDashboard;
+export default userData;
 
 
 
