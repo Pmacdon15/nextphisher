@@ -14,7 +14,7 @@ import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCo
 
 
 
-export default async function  serverComponent  ({ router,children}) {
+export default async function serverComponent({ router, children }) {
     async function getWebSites() {
         try {
             const token = cookies().get("AuthCookieTracking");
@@ -45,7 +45,11 @@ export default async function  serverComponent  ({ router,children}) {
         return { message: "success", data };
     }
 
-    const { data: dataSet } = await getWebSites();
+    
+    const { data: dataSet , message:message} = await getWebSites();
+    if (message === "Unauthorized") {
+        redirect("/");
+    }
     revalidatePath('@/app/admin/serverComponent.jsx')
 
     return (
@@ -56,8 +60,8 @@ export default async function  serverComponent  ({ router,children}) {
                         <p className={adminStyles.par}>
                             Project Name: {data.name}
                         </p>
-                        {/* <ClientButtonToQrCode key={data.name} siteName={data.name} /> */}
-                        {/* {children} */}
+                        <ClientButtonToQrCode siteName={data.name} />
+
                     </div>
                 ))
             ) : (

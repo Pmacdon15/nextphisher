@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
 import Button from "@mui/material/Button";
-import { logout } from "@/actions/logout.jsx";
+import { logout } from "@/actions/actions.jsx";
 import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
 export default function ClientComponent({ children }) {

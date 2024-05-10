@@ -2,7 +2,6 @@
 'use server';
 import ServerComponent from "@/components/adminDashboard/serverComponent.jsx";
 import ClientComponent from "@/components/adminDashboard/clientComponent.jsx";
-import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
 const AdminDashboard = async () => {
   return (

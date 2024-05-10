@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const userDataDisplay = async () => {
 
@@ -38,9 +39,13 @@ const userDataDisplay = async () => {
     return { message: "success", data };
   }
 
-  const { data: dataSet } = await getUserData();
+  const { data: dataSet, message: message } = await getUserData();
+  if (message === "Unauthorized") {
+    redirect("/");
+  }
+
   revalidatePath('@/app/admin/userData/page.jsx')
-  
+
   return (
     <div>
       {dataSet.length > 0 ? (
