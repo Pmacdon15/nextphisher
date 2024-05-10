@@ -8,7 +8,7 @@ const AdminDashboard = async () => {
   return (
     <div>
       <ClientComponent>
-        <ServerComponent></ServerComponent>       
+        <ServerComponent/>     
       </ClientComponent>
 
     </div>

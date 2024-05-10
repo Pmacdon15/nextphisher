@@ -13,7 +13,8 @@ import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
 import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
 
-export default async function  serverComponent  ({ children}) {
+
+export default async function  serverComponent  ({ router,children}) {
     async function getWebSites() {
         try {
             const token = cookies().get("AuthCookieTracking");
@@ -55,7 +56,8 @@ export default async function  serverComponent  ({ children}) {
                         <p className={adminStyles.par}>
                             Project Name: {data.name}
                         </p>
-                        <ClientButtonToQrCode  />
+                        {/* <ClientButtonToQrCode key={data.name} siteName={data.name} /> */}
+                        {/* {children} */}
                     </div>
                 ))
             ) : (

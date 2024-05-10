@@ -1,8 +1,6 @@
 //@/components/adminDashboard/clientComponent.jsx
 'use client';
 import { useRouter } from "next/navigation";
-// import adminStyles from "@/app/admin/adminStyles.module.css";
-// import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
 import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
 import Button from "@mui/material/Button";
 import { logout } from "@/actions/logout.jsx";
@@ -11,10 +9,9 @@ import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCo
 export default function ClientComponent({ children }) {
     const router = useRouter();
     return (
-        <div>
-          
+        <div>          
             <h2 className={adminStyles.title}>Admin Dashboard</h2>
-            {children}
+            {children}            
             <div >
                 <Button className={adminStyles.button} variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
                     Decoy Controller
