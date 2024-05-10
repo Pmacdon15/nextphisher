@@ -1,15 +1,14 @@
-import adminStyles from "../adminStyles.module.css";
-import Button from "@mui/material/Button";
-import { useRouter } from 'next/navigation';
 
 
-import UserDataDisplay from "./UserDataDisplay/component.jsx";
+import UserDataDisplayServer from "@/components/userDataDisplay/serverComponent.jsx";
+import UserDataDisplayClient from  "@/components/userDataDisplay/clientComponent.jsx";
 
 const AdminDashboard = () => {
   return (
     <div>
-      <h2 className={adminStyles.title}>User Data</h2>
-      <UserDataDisplay></UserDataDisplay>
+      <UserDataDisplayClient>
+        <UserDataDisplayServer></UserDataDisplayServer>
+      </UserDataDisplayClient>
     </div>
   );
 

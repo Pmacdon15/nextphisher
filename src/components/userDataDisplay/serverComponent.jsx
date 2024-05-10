@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
-import adminStyles from "../../adminStyles.module.css";
+import adminStyles from "@/app/admin/adminStyles.module.css";
 
 const userDataDisplay = async () => {
 
@@ -43,19 +43,19 @@ const userDataDisplay = async () => {
     <div>
       {dataSet.length > 0 ? (
         <div className={adminStyles.contentRow}>
-          <div className={adminStyles.dataColumn}>
-            {dataSet.map((data, index) => (
-              <div key={index} className={adminStyles.data}>
-                <p className={adminStyles.par}>User Name: {data.username}</p>
-                <p className={adminStyles.par}>Password: {data.password}</p>
-                <p className={adminStyles.par}>Service: {data.service}</p>
-                <p className={adminStyles.par}>IP Address: {data.ipv4}</p>
-                <p className={adminStyles.par}>Date: {data.date.split("T")[0]}</p>
-                <p className={adminStyles.par}>Time: {data.date.split("T")[1].split(".")[0]}</p>
-              </div>
-            ))}
-          </div>
+
+          {dataSet.map((data, index) => (
+            <div key={index} className={adminStyles.data}>
+              <p className={adminStyles.par}>User Name: {data.username}</p>
+              <p className={adminStyles.par}>Password: {data.password}</p>
+              <p className={adminStyles.par}>Service: {data.service}</p>
+              <p className={adminStyles.par}>IP Address: {data.ipv4}</p>
+              <p className={adminStyles.par}>Date: {data.date.split("T")[0]}</p>
+              <p className={adminStyles.par}>Time: {data.date.split("T")[1].split(".")[0]}</p>
+            </div>
+          ))}
         </div>
+
       ) : (
         <p>No data</p>
       )}

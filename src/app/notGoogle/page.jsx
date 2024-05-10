@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket.js";
 import { useRouter } from "next/navigation";
-import Login from '@/components/login/login';
+import Login from '@/clientComponents/login/login';
 
 const NotGoogle = () => {
   const [ipv4, setIpv4] = useState(null);
