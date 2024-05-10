@@ -1,12 +1,18 @@
+//@/components/adminDashboard/clientButtonToQrCode.jsx
 'use client';
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
+// import { redirect } from "next/navigation";
 
 
 export default function ClientButtonToQrCode({ siteName }) {
-    // const router = useRouter();
+  // try{  
+  const router = useRouter();
+  // }catch(error){
+  //   console.error("Error with router, error: ", error);
+  // }
     return (        
-        <Button  variant="contained" color="success">
+        <Button  onClick={() => router.push(`/admin/QrCode/${siteName}`)}variant="contained" color="success">
         Qr Code
       </Button>
        

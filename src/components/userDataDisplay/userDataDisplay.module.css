@@ -6,7 +6,7 @@
     flex-direction: row;
     flex-wrap: wrap;   
     justify-content: center;
-    background-color: rgba(145, 12, 123, 0.764)  ;
+    /* background-color: rgba(145, 12, 123, 0.764)  ; */
 }
 
 .title {

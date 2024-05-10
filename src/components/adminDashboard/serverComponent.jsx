@@ -1,16 +1,19 @@
+//@/components/adminDashboard/serverComponent.jsx
 'use server';
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const jwt = require("jsonwebtoken");
 import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
-// import adminStyles from "@/app/admin/adminStyles.module.css";
+
 import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
-// import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
+
 import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
-const serverComponent = async () => {
+
+export default async function  serverComponent  ({ children}) {
     async function getWebSites() {
         try {
             const token = cookies().get("AuthCookieTracking");
@@ -52,7 +55,7 @@ const serverComponent = async () => {
                         <p className={adminStyles.par}>
                             Project Name: {data.name}
                         </p>
-                        <ClientButtonToQrCode siteName={data.name} />
+                        <ClientButtonToQrCode  />
                     </div>
                 ))
             ) : (
@@ -62,4 +65,4 @@ const serverComponent = async () => {
     );
 }
 
-export default serverComponent;
+// export default serverComponent;

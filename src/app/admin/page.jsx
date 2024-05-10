@@ -1,14 +1,15 @@
+// @/app/admin/page.jsx
+'use server';
+import ServerComponent from "@/components/adminDashboard/serverComponent.jsx";
+import ClientComponent from "@/components/adminDashboard/clientComponent.jsx";
+import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
-import UserDataDisplayServer from "@/components/adminDashboard/serverComponent.jsx";
-import UserDataDisplayClient from "@/components/adminDashboard/clientComponent.jsx";
-
-const AdminDashboard = () => {
+const AdminDashboard = async () => {
   return (
     <div>
-      <UserDataDisplayClient>
-        <UserDataDisplayServer></UserDataDisplayServer>
-       
-      </UserDataDisplayClient>
+      <ClientComponent>
+        <ServerComponent></ServerComponent>       
+      </ClientComponent>
 
     </div>
   );
