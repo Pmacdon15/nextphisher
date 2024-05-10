@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
-import adminStyles from "@/app/admin/adminStyles.module.css";
+import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
 import { revalidatePath } from "next/cache";
 
 const userDataDisplay = async () => {
@@ -44,7 +44,7 @@ const userDataDisplay = async () => {
   return (
     <div>
       {dataSet.length > 0 ? (
-        <div className={adminStyles.contentRow}>
+        <div className={adminStyles.dataColumn}>
           {dataSet.map((data, index) => (
             <div key={index} className={adminStyles.data}>
               <p className={adminStyles.par}>User Name: {data.username}</p>

@@ -10,17 +10,19 @@ export default function ClientComponent({ children }) {
         <div>
             <h2 className={adminStyles.title}>Admin Dashboard</h2>
             {children}
-            <div className={adminStyles.contentRow}>
-                <Button variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
+            <div >
+                <Button className={adminStyles.button } variant="contained" onClick={() => router.push("/admin/decoy")} color="success" style={{ margin: "1%" }}>
                     Decoy Controller
-                </Button>
-                <Button variant="contained" onClick={() => router.push("/admin/userData")} color="success" style={{ margin: "1%" }}>
+                </Button>                
+                <Button  className={adminStyles.button } variant="contained" onClick={() => router.push("/admin/userData")} color="success" style={{ margin: "1%" }}>
                     User Data
                 </Button>
-                <Button onClick={logout} variant="contained" color="success" style={{ margin: "1%" }}>
-                    Logout
-                </Button>
-            </div>
+                </div>
+                    <div className={adminStyles.dashboardColumn}>
+                    <Button onClick={() => logout()} variant="contained" color="success" style={{ margin: "1%" }}>
+                        Logout
+                    </Button>
+                </div>
         </div>
     )
 }

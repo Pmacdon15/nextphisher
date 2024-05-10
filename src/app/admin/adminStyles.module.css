@@ -36,9 +36,9 @@
     padding-top: 1%;
 }
 
-.image {
+.image {    
     margin-top: 1em; 
-    width: auto; 
+    width: 30%; 
     height:20%;   
 }
 
@@ -57,36 +57,29 @@
 .contentContainer {
     background-color: rgba(7, 116, 112, 0.764);
     margin:auto;
-    /* margin-top:auto;
-    margin-bottom:auto; */
     width: 95%;
     height: 90%;
     border-radius: 10px;
     overflow: auto;
     scrollbar-width: thin;
     box-shadow: 1px 1px 1px rgba(79, 78, 78, 0.633);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.contentRow { 
-    height: fit-content;    
+.dataColumn { 
+    height: fit-content;
     padding: 1%;
     gap:20px;
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;   
     justify-content: center;
+    background-color: rgba(36, 12, 145, 0.764);    
+    /* max-width: 800px; */
 
 }
-
-.dataColumn {
-    width: 40%;
-    margin-bottom: 2%;
-    /* background-color: grey; */
-    height: fit-content;
-    margin-right: auto;
-    margin-left: auto;
-}
-
 .data {
     background-image: linear-gradient(to bottom, rgba(70, 188, 6, 0.856), rgb(6, 110, 60) 100%);
     justify-content: center;
@@ -94,19 +87,11 @@
     padding: 2%;
     box-shadow: 1px 1px 1px rgba(78, 79, 78, 0.633);
     /* margin-top: 2%; */
-    width:350px;
+    width:200px;
 }
-.siteData {
-    background-image: linear-gradient(to bottom, rgba(70, 188, 6, 0.856), rgb(6, 110, 60) 100%);
-    justify-content: center;
-    border-radius: 10px;
-    padding: 1%;
-    box-shadow: 1px 1px 1px rgba(78, 79, 78, 0.633);
-    margin-top: 2%;
-    margin-right: auto;
-    margin-left: auto;
-    width:50%;
-}
+
+
+
 .alertOptions{
     width: 80%;
     display:flex;
@@ -121,7 +106,10 @@
 
 }
 
-@media only screen and (max-width: 800px) {
+.button{
+    min-width: 200px;
+}
+/* @media only screen and (max-width: 800px) {
     .container {
         height: 90%;
     }
@@ -133,7 +121,6 @@
         flex-direction: column;
         justify-content: center;
         align-content: center;
-
     }
     .image {
         width: auto;
@@ -142,7 +129,7 @@
 
     .dataContainer> :nth-child(2)> :nth-child(1) {
         margin-top: 0%;
-        /* background-color: red; */
+        background-color: red;
     }
 
     .dataColumn {
@@ -151,3 +138,16 @@
 
 
 }
+
+ */
+
+ /* @media only screen and (max-width: 1000px){
+    .image {    
+        margin-top: 1em; 
+        width: 60%; 
+        height:auto;   
+    }
+ }
+ */
+
+
