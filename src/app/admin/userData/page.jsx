@@ -1,14 +1,16 @@
 
 
 import UserDataDisplayServer from "@/components/userDataDisplay/serverComponent.jsx";
-import UserDataDisplayClient from  "@/components/userDataDisplay/clientComponent.jsx";
+import UserDataDisplayClient from "@/components/userDataDisplay/clientComponent.jsx";
 
 const AdminDashboard = () => {
   return (
     <div>
       <UserDataDisplayClient>
         <UserDataDisplayServer></UserDataDisplayServer>
+       
       </UserDataDisplayClient>
+
     </div>
   );
 

@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
 import adminStyles from "@/app/admin/adminStyles.module.css";
+import { revalidatePath } from "next/cache";
 
 const userDataDisplay = async () => {
 
@@ -38,7 +39,7 @@ const userDataDisplay = async () => {
   }
 
   const { data: dataSet } = await getUserData();
-
+  revalidatePath('@/app/admin/userData/page.jsx')
   return (
     <div>
       {dataSet.length > 0 ? (
