@@ -1,26 +1,16 @@
 'use server';
-const jwt = require("jsonwebtoken");
-import { cookies } from "next/headers";
+
 import fs from "fs";
 import path from "path";
 import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/actions/actions";
 
 const userDataDisplay = async () => {
 
   async function getUserData() {
-    try {
-      const token = cookies().get("AuthCookieTracking");
-      const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
-
-      if (!decoded.username === "admin") {
-        return { message: "Unauthorized", data: [] };
-      }
-    } catch (error) {
-      console.error("Error No .env file or cookie not set!");
-      return { message: "Unauthorized", data: [] };
-    }
+    if (! await auth()) redirect("/");
 
     let data = [];
     try {
@@ -40,10 +30,6 @@ const userDataDisplay = async () => {
   }
 
   const { data: dataSet, message: message } = await getUserData();
-  if (message === "Unauthorized") {
-    redirect("/");
-  }
-
   revalidatePath('@/app/admin/userData/page.jsx')
 
   return (

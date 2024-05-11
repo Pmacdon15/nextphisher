@@ -3,6 +3,25 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import path from 'path'
 import fs from 'fs'
+import jwt from 'jsonwebtoken'
+
+
+export async function auth() {  
+  try {
+    const token = cookies().get("AuthCookieTracking");
+    if (!token) throw new Error("No token found");
+
+    const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
+
+    if (!decoded.username === "admin") throw new Error("Unauthorized");    
+
+    return true;
+
+  } catch (error) {
+    console.error(error.message);
+    return false;
+  }
+}
 
 export async function logout() {
   try {

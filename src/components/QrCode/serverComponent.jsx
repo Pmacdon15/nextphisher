@@ -1,33 +1,21 @@
 'use Server';
-// import { redirect } from 'next/navigation'
-import jwt from 'jsonwebtoken'
-import { cookies } from 'next/headers'
+ import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import qrCodeStyles from '@/components/QrCode/QrCode.module.css';
 import { getBackendIp, siteImageExists, saveSiteImage } from '@/actions/actions';
+import { auth } from "@/actions/actions";
 
 
 export async function QrCodeImage(siteName) {
 
   async function generateQrCode() {
 
-    // Todo: make an auth action to check if the user is admin
-    try {
-      const token = cookies().get("AuthCookieTracking");
-      const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
-
-      if (!decoded.username === "admin") {
-        throw new Error("Unauthorized");
-      }
-    } catch (error) {
-      console.error("Error No .env file or cookie not set! Error: ", error);
-      return { message: "Unauthorized", data: [] };
-    }
+    if (! await auth()) redirect("/");
 
     if (siteImageExists(siteName)) {
       const backendIp = await getBackendIp();
       const url = "http://" + backendIp + ":3000/" + siteName.siteName
-      console.log("Url: ", url);
+      //console.log("Url: ", url);
 
       try {
         const response = await fetch(
@@ -41,7 +29,7 @@ export async function QrCodeImage(siteName) {
         }
 
         const data = await response.blob();
-        console.log("Data: ", data);
+        
         const buffer = await data.arrayBuffer();
         if (saveSiteImage(siteName.siteName, Buffer.from(buffer))) {
           return true;
