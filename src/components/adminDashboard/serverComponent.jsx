@@ -2,31 +2,18 @@
 'use server';
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
-const jwt = require("jsonwebtoken");
-import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
-
 import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
-
 import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
+import { auth } from "@/actions/actions";
 
 
 
-export default async function serverComponent({ router, children }) {
+export default async function serverComponent() {
     async function getWebSites() {
-        try {
-            const token = cookies().get("AuthCookieTracking");
-            const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
 
-            if (!decoded.username === "admin") {
-                return { message: "Unauthorized", data: [] };
-            }
-        } catch (error) {
-            console.error("Error No .env file or cookie not set! error: ", error);
-            return { message: "Unauthorized", data: [] };
-        }
+        if (! await auth()) redirect("/");
 
         let data = [];
         try {
@@ -45,11 +32,7 @@ export default async function serverComponent({ router, children }) {
         return { message: "success", data };
     }
 
-    
-    const { data: dataSet , message:message} = await getWebSites();
-    if (message === "Unauthorized") {
-        redirect("/");
-    }
+    const { data: dataSet, message: message } = await getWebSites();
     revalidatePath('@/app/admin/serverComponent.jsx')
 
     return (
