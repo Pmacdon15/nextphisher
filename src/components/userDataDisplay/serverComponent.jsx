@@ -1,5 +1,4 @@
 'use server';
-
 import fs from "fs";
 import path from "path";
 import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
@@ -7,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/actions/actions";
 
-const userDataDisplay = async () => {
+export default async function userDataDisplay () {
 
   async function getUserData() {
     if (! await auth()) redirect("/");
@@ -55,4 +54,3 @@ const userDataDisplay = async () => {
   );
 }
 
-export default userDataDisplay;

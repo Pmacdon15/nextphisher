@@ -8,8 +8,6 @@ import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
 import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 import { auth } from "@/actions/actions";
 
-
-
 export default async function serverComponent() {
     async function getWebSites() {
 

@@ -77,13 +77,11 @@ const Home = () => {
           throw new Error("Failed to fetch IPv4 address");
         }
         const result = await response.json();
-        setIpv4(result.ip);
-        //console.log(result.ip);
+        setIpv4(result.ip);;
       } catch (error) {
         console.error("Error fetching IPv4 address:", error.message);
       }
     };
-
     fetchIPv4();
   }, [router]);
 
