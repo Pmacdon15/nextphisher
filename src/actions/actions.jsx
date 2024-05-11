@@ -6,14 +6,14 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 
 
-export async function auth() {  
+export async function auth() {
   try {
     const token = cookies().get("AuthCookieTracking");
     if (!token) throw new Error("No token found");
 
     const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
 
-    if (!decoded.username === "admin") throw new Error("Unauthorized");    
+    if (!decoded.username === "admin") throw new Error("Unauthorized");
 
     return true;
 
@@ -30,6 +30,21 @@ export async function logout() {
     console.error("Error logging out: ", error);
   }
   redirect("/");
+}
+
+export async function getWebSites() {
+  try {
+    const filePath = path.join(process.cwd(), "data", "config.json");
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, "utf8").trim();
+      if (fileContent) {
+        return JSON.parse(fileContent);
+      }
+    }
+  } catch (error) {
+    console.error("Error reading  error: ", error.message);
+    return false;
+  }
 }
 
 export async function getBackendIp() {

