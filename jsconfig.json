@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      // "@/admin/userData/userDataDisplay/clientComponent": ["./src/app/admin/userData/userDataDisplay/clientComponent.jsx"],
+      // "@/admin/userData/userDataDisplay/serverComponent": ["./src/app/admin/userData/userDataDisplay/serverComponent.jsx"],
+      // "@/admin/clientComponent":[ "./src/app/admin/clientComponent.jsx"],
+      // "@/admin/serverComponent": ["./src/app/admin/serverComponent.jsx"],
+      
     }
   }
 }

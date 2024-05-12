@@ -1,0 +1,15 @@
+.dataColumn { 
+    height: fit-content;
+    padding: 1%;
+    gap:20px;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;   
+    justify-content: center;     
+    /* max-width: 800px; */
+}
+
+.title {
+    font-size: 30px;
+    padding-top: 1%;
+}

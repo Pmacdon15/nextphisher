@@ -1,0 +1,47 @@
+/* styles.css */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+  .main {
+    padding: 20px 0;
+    border-radius: 10px;
+  }
+  
+  .animalList {
+    margin-bottom: 40px;
+    border-radius: 10px;
+  }
+  
+  .animalList h2 {
+    color: #333;
+  }
+  
+  .buyingGuide {
+    background-color: #8b8686;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .buyingGuide h2 {
+    color: #333;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 10px;
+  }
+  

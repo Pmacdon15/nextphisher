@@ -4,7 +4,7 @@ import { socket } from "../socket.js";
 import decoyStyles from "./decoy.module.css";
 import { useRouter } from 'next/navigation';
 
-const Home = () => {
+export default function Decoy  () {
   const [ipv4, setIpv4] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
@@ -77,13 +77,11 @@ const Home = () => {
           throw new Error("Failed to fetch IPv4 address");
         }
         const result = await response.json();
-        setIpv4(result.ip);
-        //console.log(result.ip);
+        setIpv4(result.ip);;
       } catch (error) {
         console.error("Error fetching IPv4 address:", error.message);
       }
     };
-
     fetchIPv4();
   }, [router]);
 
@@ -123,4 +121,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+
