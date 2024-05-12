@@ -25,9 +25,6 @@ export async function POST(req) {
           console.error("Error No .env file or cookie not set!");
         }
         return Response.json({ message: "Authorized" });
-        //return Response.json({ message: "Authorized", token });
-        //return Response.cookie("token", token, { httpOnly: true, secure: true, sameSite: "None" });
-      } else return Response.json({ message: "Unauthorized" }); // Return Unauthorized if username and password are not admin
     } else return Response.json({ message: "Unauthorized" });
   }
-  
+}
