@@ -5,7 +5,7 @@ import path from 'path'
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 
-export async function login(data){
+export async function login(data) {
   try {
     console.log("Data: ", data);
     console.log(data.username);
@@ -27,9 +27,32 @@ export async function login(data){
       });
 
       return true;
-    } 
+    }
   } catch (error) {
     console.error("Error No .env file or cookie not set!, Error: ", error.message);
+    return false;
+  }
+}
+
+export async function clientLogin(data) {
+  try {
+    let jsonArray = [];
+    const filePath = path.join(process.cwd(), "data", "userData.json");
+    // console.log("Appending user data:", data);
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, "utf8").trim();
+      if (fileContent) {
+        jsonArray = JSON.parse(fileContent);
+      }
+    }
+
+    jsonArray.push(data);
+
+    fs.writeFileSync(filePath, JSON.stringify(jsonArray, null, 2));
+    console.log("User data appended to file");
+    return true;
+  }catch (error) {
+    console.error("Error appending to file:", error.message);
     return false;
   }
 }

