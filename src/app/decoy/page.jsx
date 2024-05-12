@@ -4,7 +4,7 @@ import { socket } from "../socket.js";
 import decoyStyles from "./decoy.module.css";
 import { useRouter } from 'next/navigation';
 
-const Home = () => {
+export default function decoy () {
   const [ipv4, setIpv4] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
@@ -121,4 +121,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+
