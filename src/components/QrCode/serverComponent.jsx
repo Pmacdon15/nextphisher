@@ -28,13 +28,10 @@ export async function QrCodeImage(siteName) {
         }
 
         const data = await response.blob();
-        
+
         const buffer = await data.arrayBuffer();
-        if (saveSiteImage(siteName.siteName, Buffer.from(buffer))) {
-          return true;
-        } else {
-          return false;
-        }
+        saveSiteImage(siteName.siteName, Buffer.from(buffer));
+        return true;
 
       } catch (error) {
         console.error("Error getting Qr Code, error: ", error);

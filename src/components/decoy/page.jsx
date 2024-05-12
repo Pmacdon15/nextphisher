@@ -4,7 +4,7 @@ import { socket } from "../socket.js";
 import decoyStyles from "./decoy.module.css";
 import { useRouter } from 'next/navigation';
 
-export default function Decoy  () {
+export default function Decoy () {
   const [ipv4, setIpv4] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
