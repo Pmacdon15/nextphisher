@@ -109,7 +109,7 @@ export async function getBackendIp() {
 
 export async function siteImageExists(siteName) {
   try {
-    const siteImageFilePath = path.join(process.cwd(), 'public', 'qrCodes', `${siteName}.png`);
+    const siteImageFilePath = path.join(process.cwd(), 'public/qrCodes', `${siteName}.png`);
     const exists = fs.existsSync(siteImageFilePath);
     console.log("Site image path: ", siteImageFilePath);
     console.log("Site image exists: ", exists ?  true: false);
@@ -122,7 +122,7 @@ export async function siteImageExists(siteName) {
 
 export async function saveSiteImage(siteName, siteImage) {
   try {
-    const siteImageFilePath = path.join(process.cwd(), 'public', 'qrCodes', `${siteName}.png`);
+    const siteImageFilePath = path.join(process.cwd(), 'public/qrCodes', `${siteName}.png`);
     console.log("Saving site image: ", siteImageFilePath);
     fs.writeFileSync(siteImageFilePath, siteImage);
     console.log("Site image saved successfully");
