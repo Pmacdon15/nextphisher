@@ -11,7 +11,7 @@ export async function QrCodeImage(siteName) {
 
     if (! await auth()) redirect("/");
 
-    if (!siteImageExists(siteName)) {
+    if (!await siteImageExists(siteName.siteName)) {
       const backendIp = await getBackendIp();
       const url = "http://" + backendIp + ":3000/" + siteName.siteName
       //console.log("Url: ", url);
@@ -28,37 +28,41 @@ export async function QrCodeImage(siteName) {
         }
 
         const data = await response.blob();
-
-        const buffer = await data.arrayBuffer();
-        saveSiteImage(siteName.siteName, Buffer.from(buffer));
-        return true;
+        const buffer = Buffer.from(await data.arrayBuffer());
+        if ( saveSiteImage(siteName.siteName, buffer)) {
+          console.log("Image saved successfully");
+          return true;
+        }
+        throw new Error("Error saving image");
 
       } catch (error) {
         console.error("Error getting Qr Code, error: ", error);
         return false
       }
-    }else {
-      return true;
-    }
+    } else { 
+    console.log("Image already exists");
+    return true;
   }
+  
+}
 
-  const QrCodeValid = await generateQrCode();
+const QrCodeValid = await generateQrCode();
 
-  return (
-    QrCodeValid ? (
-      <div>
-        <Image
-          width={250}
-          height={250}
-          src={`/qrCodes/${siteName.siteName}.png`}
-          alt="QR Code"
-          className={qrCodeStyles.image}
-        />
-      </div>
-    ) : (
-      <div>Loading....</div>
-    )
+return (
+  QrCodeValid ? (
+    <div>
+      <Image
+        width={250}
+        height={250}
+        src={`/qrCodes/${siteName.siteName}.png`}
+        alt="QR Code"
+        className={qrCodeStyles.image}
+      />
+    </div>
+  ) : (
+    <div>Loading....</div>
   )
+)
 
 }
 

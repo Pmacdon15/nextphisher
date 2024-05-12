@@ -108,16 +108,28 @@ export async function getBackendIp() {
 }
 
 export async function siteImageExists(siteName) {
+  console.log("Checking if site image exists: ", siteName);
+  
   const siteImageFilePath = path.join(process.cwd(), `public/qrCodes/${siteName}.png`);
-  const siteImageExists = fs.existsSync(siteImageFilePath);
-  return siteImageExists ? 'siteImage' : null;
+  const exists = fs.existsSync(siteImageFilePath);
+  console.log("Site image exists: ", exists ?  true: false);
+  console
+  return exists ? true : false ;
 }
 
 export async function saveSiteImage(siteName, siteImage) {
-  const siteImageFilePath = path.join(process.cwd(), `public/qrCodes/${siteName}.png`);
   try {
-    fs.writeFileSync(siteImageFilePath, siteImage);
-    return true;
+    const siteImageFilePath = path.join(process.cwd(), `public/qrCodes/${siteName}.png`);
+    console.log("Saving site image: ", siteImageFilePath);
+    fs.writeFile(siteImageFilePath, siteImage, (err) => {
+      if (err) {
+        console.error("Error saving site image: ", err);
+        return false;
+      } else {
+        console.log("Site image saved successfully");
+        return true;
+      }
+    });
   } catch (error) {
     console.error("Error saving site image: ", error);
     return false;
