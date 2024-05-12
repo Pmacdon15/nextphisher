@@ -6,11 +6,7 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 
 export async function login(data) {
-  try {
-    console.log("Data: ", data);
-    console.log(data.username);
-    console.log(data.password);
-    console.log(process.env.SECRET_ADMIN_PASSWORD);
+  try {    
     if (data.username === "admin" && data.password === process.env.SECRET_ADMIN_PASSWORD) {
       const user = { id: 69, username: "admin" };
       const token = jwt.sign(user, process.env.SECRET_KEY_JWT, {
