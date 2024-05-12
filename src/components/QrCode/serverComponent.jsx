@@ -11,7 +11,7 @@ export async function QrCodeImage(siteName) {
 
     if (! await auth()) redirect("/");
 
-    if (siteImageExists(siteName)) {
+    if (!siteImageExists(siteName)) {
       const backendIp = await getBackendIp();
       const url = "http://" + backendIp + ":3000/" + siteName.siteName
       //console.log("Url: ", url);
@@ -37,6 +37,8 @@ export async function QrCodeImage(siteName) {
         console.error("Error getting Qr Code, error: ", error);
         return false
       }
+    }else {
+      return true;
     }
   }
 
