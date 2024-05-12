@@ -108,28 +108,25 @@ export async function getBackendIp() {
 }
 
 export async function siteImageExists(siteName) {
-  console.log("Checking if site image exists: ", siteName);
-  
-  const siteImageFilePath = path.join(process.cwd(), `public/qrCodes/${siteName}.png`);
-  const exists = fs.existsSync(siteImageFilePath);
-  console.log("Site image exists: ", exists ?  true: false);
-  console
-  return exists ? true : false ;
+  try {
+    const siteImageFilePath = path.join(process.cwd(), 'public', 'qrCodes', `${siteName}.png`);
+    const exists = fs.existsSync(siteImageFilePath);
+    console.log("Site image path: ", siteImageFilePath);
+    console.log("Site image exists: ", exists ?  true: false);
+    return exists ? true : false ;
+  } catch (error) {
+    console.error("Error checking site image: ", error);
+    return false;
+  }
 }
 
 export async function saveSiteImage(siteName, siteImage) {
   try {
-    const siteImageFilePath = path.join(process.cwd(), `public/qrCodes/${siteName}.png`);
+    const siteImageFilePath = path.join(process.cwd(), 'public', 'qrCodes', `${siteName}.png`);
     console.log("Saving site image: ", siteImageFilePath);
-    fs.writeFile(siteImageFilePath, siteImage, (err) => {
-      if (err) {
-        console.error("Error saving site image: ", err);
-        return false;
-      } else {
-        console.log("Site image saved successfully");
-        return true;
-      }
-    });
+    fs.writeFileSync(siteImageFilePath, siteImage);
+    console.log("Site image saved successfully");
+    return true;
   } catch (error) {
     console.error("Error saving site image: ", error);
     return false;

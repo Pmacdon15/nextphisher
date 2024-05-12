@@ -109,45 +109,10 @@
 .button{
     min-width: 200px;
 }
-/* @media only screen and (max-width: 800px) {
-    .container {
-        height: 90%;
-    }
-    .dashboardContainer {
-        height: 90%;
-    }
-
-    .dataContainer {
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-    }
+ @media screen and (max-width: 900px) {
+   
     .image {
-        width: auto;
-        height: 10%;
+        width: 70%;
     }
-
-    .dataContainer> :nth-child(2)> :nth-child(1) {
-        margin-top: 0%;
-        background-color: red;
-    }
-
-    .dataColumn {
-        width: 90%;
-    }
-
-
-}
-
- */
-
- /* @media only screen and (max-width: 1000px){
-    .image {    
-        margin-top: 1em; 
-        width: 60%; 
-        height:auto;   
-    }
+    
  }
- */
-
-
