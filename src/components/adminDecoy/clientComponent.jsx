@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { use, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 
@@ -7,7 +7,7 @@ import { TextField } from "@mui/material";
 import adminStyles from "@/components/adminDecoy/adminDecoy.module.css";
 import { socket } from "@/app/socket.js";
 import { getWebSites } from "@/actions/actions.jsx";
-export default async function Home() {
+export default function Home() {
 
   const [webSitesInProject, setWebSitesInProject] = useState([]);
 
@@ -64,7 +64,7 @@ export default async function Home() {
     getWebSites().then((data) => {
       setWebSitesInProject(data);
     });
-  }, [])
+  }, [router])
 
   const handleAlertClick = (userId) => {
     if (socket) {
