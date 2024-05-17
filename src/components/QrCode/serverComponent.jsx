@@ -9,7 +9,7 @@ export async function QrCodeImage(siteName) {
 
   async function generateQrCode() {
 
-    if (! await auth()) redirect("/");
+    // if (! await auth()) redirect("/");
 
     if (!await siteImageExists(siteName.siteName)) {
       const backendIp = await getBackendIp();

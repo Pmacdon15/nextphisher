@@ -11,7 +11,7 @@ import { auth } from "@/actions/actions";
 export default async function serverComponent() {
     async function getWebSites() {
 
-        if (! await auth()) redirect("/");
+        // if (! await auth()) redirect("/");
 
         let data = [];
         try {

@@ -9,7 +9,7 @@ import { auth } from "@/actions/actions";
 export default async function userDataDisplay () {
 
   async function getUserData() {
-    if (! await auth()) redirect("/");
+    // if (! await auth()) redirect("/");
 
     let data = [];
     try {
