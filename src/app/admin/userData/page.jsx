@@ -2,20 +2,21 @@
 
 import UserDataDisplayServer from "@/components/userDataDisplay/serverComponent.jsx";
 import UserDataDisplayClient from "@/components/userDataDisplay/clientComponent.jsx";
+import {auth} from "@/actions/actions.jsx"
 
-const userData = () => {
+export default async function userData () {
+  await auth();
   return (
     <div>
       <UserDataDisplayClient>
-        <UserDataDisplayServer></UserDataDisplayServer>
-       
+        <UserDataDisplayServer></UserDataDisplayServer>       
       </UserDataDisplayClient>
 
     </div>
   );
 
 };
-export default userData;
+// export default userData;
 
 
 

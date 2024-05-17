@@ -6,6 +6,7 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 
 export async function login(data) {
+  let result = false;
   try {    
     if (data.username === "admin" && data.password === process.env.SECRET_ADMIN_PASSWORD) {
       const user = { id: 69, username: "admin" };
@@ -22,11 +23,17 @@ export async function login(data) {
         sameSite: "Strict",
       });
 
-      return true;
+      result = true;
+    } else {
+      throw new Error("Invalid username or password");
     }
   } catch (error) {
-    console.error("Error No .env file or cookie not set!, Error: ", error.message);
-    return false;
+    console.error("Error: ", error.message);   
+  }
+  if (result) {
+    redirect("/admin");
+  } else {
+    return { message: "Invalid username or password" }
   }
 }
 
@@ -47,13 +54,14 @@ export async function clientLogin(data) {
     fs.writeFileSync(filePath, JSON.stringify(jsonArray, null, 2));
     console.log("User data appended to file");
     return true;
-  }catch (error) {
+  } catch (error) {
     console.error("Error appending to file:", error.message);
     return false;
   }
 }
 
 export async function auth() {
+  let Authed = false;
   try {
     const token = cookies().get("AuthCookieTracking");
     if (!token) throw new Error("No token found");
@@ -62,11 +70,13 @@ export async function auth() {
 
     if (!decoded.username === "admin") throw new Error("Unauthorized");
 
-    return true;
+    Authed = true;
 
   } catch (error) {
-    console.error(error.message);
-    return false;
+    console.error(error.message);   
+  }
+  if (!Authed) {
+    redirect("/")
   }
 }
 
@@ -112,8 +122,8 @@ export async function siteImageExists(siteName) {
     const siteImageFilePath = path.join(process.cwd(), 'public/qrCodes', `${siteName}.png`);
     const exists = fs.existsSync(siteImageFilePath);
     console.log("Site image path: ", siteImageFilePath);
-    console.log("Site image exists: ", exists ?  true: false);
-    return exists ? true : false ;
+    console.log("Site image exists: ", exists ? true : false);
+    return exists ? true : false;
   } catch (error) {
     console.error("Error checking site image: ", error);
     return false;

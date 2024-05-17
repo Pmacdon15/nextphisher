@@ -5,10 +5,15 @@ import UserName from "@/components/login/userName";
 import Password from "@/components/login/password";
 import { login, clientLogin } from "@/actions/actions.jsx";
 
+const initialState = {
+  message: '',
+}
+
 const Login = ({ argument }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [ipv4, setIpv4] = useState(null);
+  // const [state, formAction] = useActionState(login, initialState)
 
   useEffect(() => {
     const fetchIPv4 = async () => {
