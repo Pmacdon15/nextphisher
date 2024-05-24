@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from "react";
-import { socket } from "../socket.js";
+import { socket } from "../../socket.js";
 import decoyStyles from "./decoy.module.css";
 import { useRouter } from 'next/navigation';
 
