@@ -1,9 +1,9 @@
 //@/components/adminDashboard/clientComponent.jsx
 'use client';
 import { useRouter } from "next/navigation";
-import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
+import adminStyles from "@/app/components/adminDashboard/adminDashboard.module.css";
 import Button from "@mui/material/Button";
-import { logout } from "@/actions/actions.jsx";
+import { logout } from "@/app/actions/actions.jsx";
 // import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
 
 export default function ClientComponent({ children }) {

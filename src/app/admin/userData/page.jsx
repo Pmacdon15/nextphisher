@@ -1,11 +1,9 @@
 
 
-import UserDataDisplayServer from "@/components/userDataDisplay/serverComponent.jsx";
-import UserDataDisplayClient from "@/components/userDataDisplay/clientComponent.jsx";
-import {auth} from "@/actions/actions.jsx"
+import UserDataDisplayServer from "@/app/components/userDataDisplay/serverComponent.jsx";
+import UserDataDisplayClient from "@/app/components/userDataDisplay/clientComponent.jsx";
 
 export default async function userData () {
-  await auth();
   return (
     <div>
       <UserDataDisplayClient>

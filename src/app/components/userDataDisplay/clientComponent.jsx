@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from "next/navigation";
-import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
+import adminStyles from "@/app/components/userDataDisplay/userDataDisplay.module.css";
 import Button from "@mui/material/Button";
 export default function ClientComponent({children}) {
   const router = useRouter();

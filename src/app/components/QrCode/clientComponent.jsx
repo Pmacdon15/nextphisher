@@ -1,5 +1,5 @@
 'use client';
-import QrCodeStyles from "@/components/QrCode/QrCode.module.css";
+import QrCodeStyles from "@/app/components/QrCode/QrCode.module.css";
 import Button from "@mui/material/Button";
 import { useRouter} from "next/navigation";
 

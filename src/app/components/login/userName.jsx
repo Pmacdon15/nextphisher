@@ -6,8 +6,8 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import Image from "next/image";
 import notGoogleStyles from "./notGoogleStyles.module.css";
-import notGoogleImage from "../../../public/notGoogle.png";
-import adminImage from "../../../public/admin.png";
+import notGoogleImage from "/public/notGoogle.png";
+import adminImage from "/public/admin.png";
 
 import testcss from "./testcss.module.css";
 

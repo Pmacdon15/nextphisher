@@ -1,17 +1,14 @@
 //@/components/adminDashboard/serverComponent.jsx
 'use server';
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import fs from "fs";
 import path from "path";
-import adminStyles from "@/components/adminDashboard/adminDashboard.module.css";
-import ClientButtonToQrCode from '@/components/adminDashboard/clientButtonToQrCode.jsx';
-import { auth } from "@/actions/actions";
+import adminStyles from "@/app/components/adminDashboard/adminDashboard.module.css";
+import ClientButtonToQrCode from '@/app/components/adminDashboard/clientButtonToQrCode.jsx';
+
 
 export default async function serverComponent() {
-    async function getWebSites() {
-
-        // if (! await auth()) redirect("/");
+    async function getWebSites() {    
 
         let data = [];
         try {
