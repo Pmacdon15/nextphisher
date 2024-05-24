@@ -1,9 +1,7 @@
 'use server';
 import ClientComponent from "@/components/adminDecoy/clientComponent";
-import {auth} from "@/actions/actions.jsx";
 
-export default async function Home() {
-  await auth();   
+export default async function Home() {   
   
   return (
     <ClientComponent/>
