@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import UserName from "@/components/login/userName";
-import Password from "@/components/login/password";
+import UserName from "@/app/components/login/userName";
+import Password from "@/app/components/login/password";
 import { login, clientLogin } from "@/actions/actions.jsx";
 
 const initialState = {

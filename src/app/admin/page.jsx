@@ -1,7 +1,7 @@
 // @/app/admin/page.jsx
 'use server';
-import ServerComponent from "@/components/adminDashboard/serverComponent.jsx";
-import ClientComponent from "@/components/adminDashboard/clientComponent.jsx";
+import ServerComponent from "@/app/components/adminDashboard/serverComponent.jsx";
+import ClientComponent from "@/app/components/adminDashboard/clientComponent.jsx";
 
 const AdminDashboard = async () => {  
   

@@ -1,16 +1,12 @@
 'use server';
 import fs from "fs";
 import path from "path";
-import adminStyles from "@/components/userDataDisplay/userDataDisplay.module.css";
+import adminStyles from "@/app/components/userDataDisplay/userDataDisplay.module.css";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { auth } from "@/actions/actions";
+
 
 export default async function userDataDisplay () {
-
   async function getUserData() {
-    // if (! await auth()) redirect("/");
-
     let data = [];
     try {
       const filePath = path.join(process.cwd(), "data", "userData.json");

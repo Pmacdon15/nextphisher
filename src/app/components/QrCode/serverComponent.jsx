@@ -1,15 +1,12 @@
 'use Server';
 import Image from 'next/image';
-import qrCodeStyles from '@/components/QrCode/QrCode.module.css';
+import qrCodeStyles from '@/app/components/QrCode/QrCode.module.css';
 import { getBackendIp, siteImageExists, saveSiteImage } from '@/actions/actions';
-import { redirect } from 'next/navigation';
-import { auth } from "@/actions/actions";
+
 
 export async function QrCodeImage(siteName) {
 
   async function generateQrCode() {
-
-    // if (! await auth()) redirect("/");
 
     if (!await siteImageExists(siteName.siteName)) {
       const backendIp = await getBackendIp();
@@ -29,7 +26,7 @@ export async function QrCodeImage(siteName) {
 
         const data = await response.blob();
         const buffer = Buffer.from(await data.arrayBuffer());
-        if ( saveSiteImage(siteName.siteName, buffer)) {
+        if (saveSiteImage(siteName.siteName, buffer)) {
           console.log("Image saved successfully");
           return true;
         }
@@ -39,30 +36,30 @@ export async function QrCodeImage(siteName) {
         console.error("Error getting Qr Code, error: ", error);
         return false
       }
-    } else { 
-    console.log("Image already exists");
-    return true;
+    } else {
+      console.log("Image already exists");
+      return true;
+    }
+
   }
-  
-}
 
-const QrCodeValid = await generateQrCode();
+  const QrCodeValid = await generateQrCode();
 
-return (
-  QrCodeValid ? (
-    <div>
-      <Image
-        width={250}
-        height={250}
-        src={`/qrCodes/${siteName.siteName}.png`}
-        alt="QR Code"
-        className={qrCodeStyles.image}
-      />
-    </div>
-  ) : (
-    <div>Loading....</div>
+  return (
+    QrCodeValid ? (
+      <div>
+        <Image
+          width={250}
+          height={250}
+          src={`/qrCodes/${siteName.siteName}.png`}
+          alt="QR Code"
+          className={qrCodeStyles.image}
+        />
+      </div>
+    ) : (
+      <div>Loading....</div>
+    )
   )
-)
 
 }
 
