@@ -63,14 +63,12 @@ export async function clientLogin(data) {
 
 export async function auth() {
   let Authed = false;
-  const token = cookies().get("AuthCookieTracking");
-  console.log("Token: ", token);
+  const token = cookies().get("AuthCookieTracking");  
   try {    
     if (!token) throw new Error("No token found");
 
     const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
-    //console.log("Decoded: ", decoded);
-
+    
     if (!decoded.username === "admin") throw new Error("Unauthorized");
 
     Authed = true;
