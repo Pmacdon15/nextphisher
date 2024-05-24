@@ -1,7 +1,7 @@
 'use Server';
 import Image from 'next/image';
 import qrCodeStyles from '@/app/components/QrCode/QrCode.module.css';
-import { getBackendIp, siteImageExists, saveSiteImage } from '@/actions/actions';
+import { getBackendIp, siteImageExists, saveSiteImage } from '@/app/actions/actions';
 
 
 export async function QrCodeImage(siteName) {

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import UserName from "@/app/components/login/userName";
 import Password from "@/app/components/login/password";
-import { login, clientLogin } from "@/actions/actions.jsx";
+import { login, clientLogin } from "@/app/actions/actions.jsx";
 
 const initialState = {
   message: '',

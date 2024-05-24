@@ -4,7 +4,7 @@ import adminImage from "../../../public/admin.png";
 import adminStyles from "./adminStyles.module.css";
 import { Suspense } from "react";
 import Loading from "./loading";
-import { auth } from "@/actions/actions.jsx";
+import { auth } from "@/app/actions/actions.jsx";
 
 export default async function Layout({ children }) {
   await auth();

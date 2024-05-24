@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import adminStyles from "@/app/components/adminDecoy/adminDecoy.module.css";
 import { socket } from "@/app/socket.js";
-import { getWebSites } from "@/actions/actions.jsx";
+import { getWebSites } from "@/app/actions/actions.jsx";
 export default function Home() {
 
   const [webSitesInProject, setWebSitesInProject] = useState([]);
