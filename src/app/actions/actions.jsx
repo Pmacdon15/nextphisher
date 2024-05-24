@@ -9,6 +9,7 @@ export async function login(data) {
   let result = false;
   try {    
     if (data.username === "admin" && data.password === process.env.SECRET_ADMIN_PASSWORD) {
+      console.log('data.username: ', data.username) 
       const user = { id: 69, username: "admin" };
       const token = jwt.sign(user, process.env.SECRET_KEY_JWT, {
         expiresIn: "1h",
@@ -29,11 +30,11 @@ export async function login(data) {
     }
   } catch (error) {
     console.error("Error: ", error.message);   
+    console.log(result)
   }
+  console.log(result)
   if (result) {
     redirect("/admin");
-  } else {
-    return { message: "Invalid username or password" }
   }
 }
 
@@ -63,10 +64,12 @@ export async function clientLogin(data) {
 export async function auth() {
   let Authed = false;
   const token = cookies().get("AuthCookieTracking");
+  console.log("Token: ", token);
   try {    
     if (!token) throw new Error("No token found");
 
     const decoded = jwt.verify(token.value, process.env.SECRET_KEY_JWT);
+    //console.log("Decoded: ", decoded);
 
     if (!decoded.username === "admin") throw new Error("Unauthorized");
 
