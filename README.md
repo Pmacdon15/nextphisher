@@ -47,7 +47,7 @@ This project is intended solely for educational purposes and ethical research in
 
 1. Clone repository(git ssh method) run this command: 
 ```bash
-git clone git@github.com:Pmacdon15/nextphisher.git
+git clone https://github.com/Pmacdon15/nextphisher.git
 ```
 
 # Setup
